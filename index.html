@@ -148,6 +148,36 @@
   @media(max-width:520px){
     .register-nudge{left:16px; right:16px; bottom:16px; width:auto;}
   }
+
+  /* ---------- payment confirmation modal ---------- */
+  .payment-overlay{
+    position:fixed; inset:0; z-index:400; background:rgba(0,0,0,.72); backdrop-filter:blur(4px);
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .payment-overlay.show{display:flex;}
+  .payment-modal{
+    position:relative; max-width:460px; width:100%; background:var(--charcoal);
+    border:1px solid var(--line); padding:44px 36px; text-align:center;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,.8);
+  }
+  .pm-close{
+    position:absolute; top:16px; right:16px; background:none; border:none;
+    color:var(--text-dim); font-size:22px; cursor:pointer; line-height:1;
+  }
+  .pm-close:hover{color:var(--text);}
+  .pm-icon{font-size:34px; margin-bottom:16px;}
+  .payment-modal h3{font-family:'Cinzel',serif; font-size:24px; color:var(--chrome-1); font-weight:700; margin-bottom:12px;}
+  .payment-modal > p{font-size:14px; color:var(--text-dim); line-height:1.6; margin-bottom:20px;}
+  .pm-order{
+    background:var(--card); border:1px solid var(--line); padding:16px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-dim);
+    line-height:1.8; text-align:left; margin-bottom:22px; display:none;
+  }
+  .pm-order.show{display:block;}
+  .pm-cta{width:100%; justify-content:center;}
+  .pm-note{font-size:11.5px; color:var(--text-dim); margin-top:14px; margin-bottom:0;}
+  .payment-modal.status-fallido .pm-icon, .payment-modal.status-fallido h3{color:var(--red-glow);}
+  .payment-modal.status-pendiente .pm-icon, .payment-modal.status-pendiente h3{color:var(--brass);}
   .cart-btn:hover{border-color:var(--red);}
   .cart-count{
     background:var(--red); color:#fff; font-size:10px; font-weight:700;
@@ -568,6 +598,18 @@
   <button class="rn-close" onclick="dismissNudge()" aria-label="Cerrar">&times;</button>
   <p class="rn-text">¿Ya tienes tu perfil guardado? Regístrate y agiliza tu próximo pedido.</p>
   <button class="rn-cta" onclick="goToProfile()">Crear mi perfil</button>
+</div>
+
+<div class="payment-overlay" id="paymentOverlay">
+  <div class="payment-modal">
+    <button class="pm-close" onclick="closePaymentModal()" aria-label="Cerrar">&times;</button>
+    <div class="pm-icon" id="pmIcon">✅</div>
+    <h3 id="pmTitle">¡Pago confirmado!</h3>
+    <p id="pmText">Tu pago se procesó correctamente.</p>
+    <div class="pm-order" id="pmOrder"></div>
+    <a href="#" class="btn-primary pm-cta" id="pmWhatsapp" target="_blank">Confirmar mi entrega por WhatsApp</a>
+    <p class="pm-note">Este último paso es necesario para que coordinemos tu envío o entrega.</p>
+  </div>
 </div>
 
 <section class="hero">
@@ -1262,6 +1304,59 @@ window.__ESCENCIA_IMAGES__ = {
       if(!profile) document.getElementById('registerNudge').classList.add('show');
     }, 5000);
   }
+
+  function closePaymentModal(){
+    document.getElementById('paymentOverlay').classList.remove('show');
+  }
+
+  (function checkPaymentReturn(){
+    const params = new URLSearchParams(window.location.search);
+    const pago = params.get('pago');
+    if(!pago) return;
+
+    const orderRaw = params.get('pedido') || '';
+    const modal = document.querySelector('.payment-modal');
+    const icon = document.getElementById('pmIcon');
+    const title = document.getElementById('pmTitle');
+    const text = document.getElementById('pmText');
+    const orderBox = document.getElementById('pmOrder');
+    const waLink = document.getElementById('pmWhatsapp');
+
+    modal.classList.remove('status-fallido', 'status-pendiente');
+
+    if(orderRaw){
+      orderBox.textContent = orderRaw;
+      orderBox.classList.add('show');
+    }
+
+    if(pago === 'exito'){
+      icon.textContent = '✅';
+      title.textContent = '¡Pago confirmado!';
+      text.textContent = 'Recibimos tu pago correctamente. Para coordinar tu envío o entrega, confírmanos tu pedido y tu dirección por WhatsApp.';
+      const msg = `Hola, ya realicé mi pago con tarjeta ✅\n\nMi pedido:\n${orderRaw}\n\nPor favor confírmenme la entrega.`;
+      waLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+      waLink.style.display = 'flex';
+    } else if(pago === 'pendiente'){
+      modal.classList.add('status-pendiente');
+      icon.textContent = '⏳';
+      title.textContent = 'Pago en proceso';
+      text.textContent = 'Tu pago está siendo procesado por Mercado Pago. Te recomendamos avisarnos por WhatsApp para darle seguimiento a tu pedido.';
+      const msg = `Hola, mi pago quedó pendiente de confirmación.\n\nMi pedido:\n${orderRaw}`;
+      waLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+      waLink.style.display = 'flex';
+    } else {
+      modal.classList.add('status-fallido');
+      icon.textContent = '❌';
+      title.textContent = 'No se pudo procesar tu pago';
+      text.textContent = 'Tu pago no se completó. Puedes intentarlo de nuevo o usar otro método de pago desde tu carrito.';
+      waLink.style.display = 'none';
+    }
+
+    document.getElementById('paymentOverlay').classList.add('show');
+
+    // Limpia la URL para que no se repita el aviso si recargan la página
+    window.history.replaceState({}, document.title, window.location.pathname);
+  })();
 
   const FULL_BOTTLES = [
     {n:"Dior Sauvage", full:"Dior Sauvage", img:IMG.dior_sauvage},
