@@ -277,6 +277,26 @@
   .stat .l{font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--text-dim); margin-top:4px;}
 
   /* ---------- catalog ---------- */
+  .search-box{
+    display:flex; align-items:center; gap:10px; margin-bottom:24px;
+    border:1px solid var(--line); background:var(--charcoal); padding:13px 16px;
+    transition:border-color .2s;
+  }
+  .search-box:focus-within{border-color:var(--red-glow);}
+  .search-box svg{color:var(--text-dim); flex-shrink:0;}
+  .search-box input{
+    flex-grow:1; background:none; border:none; outline:none; color:var(--text);
+    font-family:'Inter',sans-serif; font-size:13.5px;
+  }
+  .search-box input::placeholder{color:var(--text-dim);}
+  .search-clear{
+    background:none; border:none; color:var(--text-dim); font-size:18px; cursor:pointer;
+    line-height:1; flex-shrink:0;
+  }
+  .search-clear:hover{color:var(--text);}
+
+  .results-count{font-size:12px; color:var(--text-dim); margin-bottom:16px; letter-spacing:.02em;}
+
   .size-tabs{display:flex; gap:10px; margin-bottom:20px;}
   .size-tab{
     font-family:'JetBrains Mono',monospace; font-size:13px; padding:12px 22px;
@@ -302,6 +322,14 @@
   }
   .catalog-wip .wip-icon{font-size:20px; flex-shrink:0;}
   .catalog-wip .wip-note{font-size:13px; color:var(--text-dim); line-height:1.5;}
+
+  .no-results{
+    padding:56px 20px; text-align:center; border:1px dashed var(--line);
+  }
+  .no-results .nr-icon{font-size:26px; display:block; margin-bottom:14px;}
+  .no-results p{font-family:'Cinzel',serif; font-size:17px; color:var(--chrome-1); font-weight:600; max-width:420px; margin:0 auto;}
+  .no-results .nr-note{font-size:13px; color:var(--text-dim); display:block; margin-top:10px; max-width:420px; margin-left:auto; margin-right:auto; line-height:1.6;}
+  .no-results .nr-cta{margin-top:22px; display:inline-flex;}
 
   .catalog-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
   .product{
@@ -343,22 +371,34 @@
   .full-bottle-teaser{
     margin-top:56px; padding:44px 40px; border:1px solid var(--line); background:var(--charcoal);
   }
-  .fbt-head{display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:28px;}
+  .fbt-head{display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:10px;}
   .fbt-head h3{font-family:'Cinzel',serif; font-size:22px; color:var(--chrome-1); font-weight:600;}
   .fbt-head p{font-size:13.5px; color:var(--text-dim);}
-  .fbt-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:30px;}
-  .fbt-item{position:relative; aspect-ratio:4/5; overflow:hidden; border:1px solid var(--line);}
-  .fbt-item img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease;}
-  .fbt-item:hover img{transform:scale(1.05);}
-  .fbt-item::after{
+  .fbt-lead{font-size:12px; color:var(--brass); margin-bottom:28px; letter-spacing:.02em;}
+  .fbt-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:30px;}
+  .fbt-item{position:relative; display:flex; flex-direction:column; background:var(--card);}
+  .fbt-media{position:relative; aspect-ratio:4/5; overflow:hidden;}
+  .fbt-media img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease; display:block;}
+  .fbt-item:hover .fbt-media img{transform:scale(1.05);}
+  .fbt-media::after{
     content:""; position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(10,10,11,0) 50%, rgba(10,10,11,.92) 100%);
+    background:linear-gradient(180deg, rgba(10,10,11,0) 60%, rgba(10,10,11,.55) 100%);
   }
-  .fbt-item span{
-    position:absolute; bottom:12px; left:12px; right:12px; z-index:2;
+  .fbt-name{
+    position:absolute; bottom:10px; left:12px; right:12px; z-index:2;
     font-family:'Cinzel',serif; font-size:clamp(11px,3vw,14px); color:var(--chrome-1); font-weight:600; line-height:1.25;
     display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
   }
+  .fbt-body{padding:14px 16px 18px; display:flex; flex-direction:column; gap:10px; flex-grow:1;}
+  .fbt-order-note{font-size:10.5px; color:var(--brass); text-transform:uppercase; letter-spacing:.04em;}
+  .fbt-footer{display:flex; align-items:center; justify-content:space-between; margin-top:auto; gap:8px;}
+  .fbt-price{font-family:'JetBrains Mono',monospace; font-size:14.5px; color:var(--brass); font-weight:600;}
+  .fbt-quote-btn{
+    width:100%; text-align:center; border:1px solid var(--chrome-3); background:transparent; color:var(--chrome-1);
+    padding:9px; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    cursor:pointer; transition:all .2s; text-decoration:none; display:block;
+  }
+  .fbt-quote-btn:hover{border-color:var(--red); color:#fff; background:rgba(200,30,44,.12);}
   .fbt-cta{display:inline-flex;}
 
   /* ---------- how it works ---------- */
@@ -688,6 +728,12 @@
     <p>Elige tu tamaño y agrega al carrito. Precios en pesos MXN.</p>
   </div>
 
+  <div class="search-box">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="Buscar por nombre... (ej. Armani, Hawas, Nitro)" oninput="onSearchInput(this.value)">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display:none;" aria-label="Limpiar búsqueda">&times;</button>
+  </div>
+
   <div class="size-tabs">
     <button class="size-tab active" data-size="5ml" onclick="switchSize('5ml')">Decant 5 ml</button>
     <button class="size-tab" data-size="3ml" onclick="switchSize('3ml')">Decant 3 ml</button>
@@ -699,6 +745,8 @@
     <button class="gender-tab" data-gender="her" onclick="switchGender('her')">Para Ella</button>
   </div>
 
+  <p class="results-count" id="resultsCount"></p>
+
   <div class="catalog-grid" id="catalogGrid"></div>
 
   <div class="catalog-wip" id="catalogWip" style="display:none;">
@@ -706,11 +754,19 @@
     <span class="wip-note">Estás viendo nuestra línea unisex. Pronto sumamos una línea exclusiva para ella.</span>
   </div>
 
+  <div class="no-results" id="noResults" style="display:none;">
+    <span class="nr-icon">🔍</span>
+    <p>No encontramos ningún perfume con ese nombre en este filtro.</p>
+    <span class="nr-note">Puede que lo tengamos en otro tamaño, en la línea de frasco completo, o que sea una fragancia nueva — pregúntanos directo y te confirmamos.</span>
+    <a href="#" id="noResultsWa" target="_blank" class="btn-ghost nr-cta">Preguntar por WhatsApp →</a>
+  </div>
+
   <div class="full-bottle-teaser">
     <div class="fbt-head">
       <h3>¿Buscas frasco completo?</h3>
       <p>También manejamos línea de árabe y nichos sellados.</p>
     </div>
+    <p class="fbt-lead">📦 Bajo pedido — entrega en 3 a 5 días hábiles una vez confirmado tu pedido.</p>
     <div class="fbt-grid" id="fbtGrid"></div>
     <a href="https://wa.me/526122006542?text=Hola%2C%20quiero%20info%20de%20fragancias%20de%20frasco%20completo" target="_blank" class="btn-ghost fbt-cta">Preguntar por WhatsApp →</a>
   </div>
@@ -1020,6 +1076,7 @@ window.__ESCENCIA_IMAGES__ = {
 
   let currentSize = "5ml";
   let currentGender = "him";
+  let searchQuery = "";
   let cart = {}; // key: "name|size" -> {name,size,price,qty}
   let profile = null; // {name, phone, address, city, zip, email}
 
@@ -1110,15 +1167,31 @@ window.__ESCENCIA_IMAGES__ = {
   function renderCatalog(){
     grid.innerHTML = "";
     const wipEl = document.getElementById('catalogWip');
+    const noResultsEl = document.getElementById('noResults');
+    const countEl = document.getElementById('resultsCount');
 
-    grid.style.display = 'grid';
-    wipEl.style.display = currentGender === 'her' ? 'block' : 'none';
-
-    const items = CATALOG[currentSize].filter(item => {
+    const baseItems = CATALOG[currentSize].filter(item => {
       if(currentGender === 'unisex') return item.cat === 'unisex';
       // "him" y "her" muestran también los unisex
       return item.cat === currentGender || item.cat === 'unisex';
     });
+
+    const q = searchQuery.trim().toLowerCase();
+    const items = q ? baseItems.filter(item => item.n.toLowerCase().includes(q)) : baseItems;
+
+    wipEl.style.display = currentGender === 'her' ? 'flex' : 'none';
+
+    if(items.length === 0){
+      grid.style.display = 'none';
+      noResultsEl.style.display = 'block';
+      const msg = `Hola, busco un perfume llamado "${searchQuery.trim()}", ¿lo manejan?`;
+      document.getElementById('noResultsWa').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    } else {
+      grid.style.display = 'grid';
+      noResultsEl.style.display = 'none';
+    }
+
+    countEl.textContent = q ? `${items.length} resultado${items.length === 1 ? '' : 's'} para "${searchQuery.trim()}"` : '';
 
     items.forEach((item, i) => {
       const key = item.n + "|" + currentSize;
@@ -1138,6 +1211,19 @@ window.__ESCENCIA_IMAGES__ = {
         </div>`;
       grid.appendChild(el);
     });
+  }
+
+  function onSearchInput(value){
+    searchQuery = value;
+    document.getElementById('searchClear').style.display = value ? 'block' : 'none';
+    renderCatalog();
+  }
+
+  function clearSearch(){
+    searchQuery = '';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchClear').style.display = 'none';
+    renderCatalog();
   }
 
   function switchSize(size){
@@ -1404,15 +1490,31 @@ window.__ESCENCIA_IMAGES__ = {
   })();
 
   const FULL_BOTTLES = [
-    {n:"Dior Sauvage", full:"Dior Sauvage", img:IMG.dior_sauvage},
-    {n:"Born in Roma Intense", full:"Valentino Born in Roma Intense", img:IMG.valentino_born_in_roma},
-    {n:"Very Good Girl", full:"Carolina Herrera Very Good Girl", img:IMG.very_good_girl},
+    {n:"Dior Sauvage", full:"Dior Sauvage", img:IMG.dior_sauvage, price:null},
+    {n:"Born in Roma Intense", full:"Valentino Born in Roma Intense", img:IMG.valentino_born_in_roma, price:null},
+    {n:"Very Good Girl", full:"Carolina Herrera Very Good Girl", img:IMG.very_good_girl, price:null},
   ];
-  document.getElementById('fbtGrid').innerHTML = FULL_BOTTLES.map(b => `
+  document.getElementById('fbtGrid').innerHTML = FULL_BOTTLES.map((b, i) => {
+    const key = b.n + "|Frasco completo";
+    const isAdded = !!cart[key];
+    const footer = (b.price != null)
+      ? `<div class="fbt-footer">
+           <div class="fbt-price mono">$${b.price}</div>
+           <button class="add-btn ${isAdded ? 'added' : ''}" onclick="addToCart('${b.n.replace(/'/g,"\\'")}', ${b.price}, 'Frasco completo', this)">${isAdded ? '✓' : '+'}</button>
+         </div>`
+      : `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar el ' + b.full + ' en frasco completo')}" target="_blank" class="fbt-quote-btn">Cotizar por WhatsApp</a>`;
+    return `
     <div class="fbt-item">
-      <img src="${b.img}" alt="${b.full}" loading="lazy">
-      <span>${b.n}</span>
-    </div>`).join('');
+      <div class="fbt-media">
+        <img src="${b.img}" alt="${b.full}" loading="lazy">
+        <div class="fbt-name">${b.n}</div>
+      </div>
+      <div class="fbt-body">
+        <span class="fbt-order-note">Bajo pedido · 3-5 días hábiles</span>
+        ${footer}
+      </div>
+    </div>`;
+  }).join('');
 
   renderCatalog();
   updateCartUI();
