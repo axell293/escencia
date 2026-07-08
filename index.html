@@ -429,6 +429,16 @@
   }
   .ship-cta span{font-size:14px; color:var(--text-dim); max-width:420px;}
 
+  /* ---------- customers ---------- */
+  .customers-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line);
+    margin-bottom:28px;
+  }
+  .customer-item{aspect-ratio:4/5; overflow:hidden; background:var(--card);}
+  .customer-item img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease;}
+  .customer-item:hover img{transform:scale(1.05);}
+  .customers-cta{display:inline-flex;}
+
   /* ---------- location ---------- */
   .loc-grid{display:grid; grid-template-columns:1fr 1.1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
   .loc-info{background:var(--card); padding:44px; display:flex; flex-direction:column; justify-content:center;}
@@ -560,6 +570,7 @@
     .steps{grid-template-columns:1fr;}
     .pay-grid{grid-template-columns:1fr;}
     .ship-steps{grid-template-columns:1fr 1fr;}
+    .customers-grid{grid-template-columns:1fr 1fr;}
     .loc-grid{grid-template-columns:1fr;}
     .profile-box{padding:32px 24px;}
     .section-head{flex-direction:column; align-items:flex-start;}
@@ -610,6 +621,7 @@
     <a href="#como-funciona">Cómo comprar</a>
     <a href="#pago">Pago</a>
     <a href="#envios">Envíos</a>
+    <a href="#clientes">Clientes</a>
     <a href="#ubicacion">Ubicación</a>
     <a href="#perfil">Mi Perfil</a>
   </nav>
@@ -628,6 +640,7 @@
   <a href="#como-funciona" onclick="closeMobileMenu()">Cómo comprar</a>
   <a href="#pago" onclick="closeMobileMenu()">Pago</a>
   <a href="#envios" onclick="closeMobileMenu()">Envíos</a>
+  <a href="#clientes" onclick="closeMobileMenu()">Clientes</a>
   <a href="#ubicacion" onclick="closeMobileMenu()">Ubicación</a>
   <a href="#perfil" onclick="closeMobileMenu()">Mi Perfil</a>
 </div>
@@ -879,10 +892,35 @@
   </div>
 </section>
 
+<section id="clientes">
+  <div class="section-head">
+    <div>
+      <div class="num mono">05 / clientes</div>
+      <h2>Clientes reales</h2>
+    </div>
+    <p>Así llegan los pedidos, directo de quien ya los recibió.</p>
+  </div>
+  <div class="customers-grid">
+    <div class="customer-item">
+      <img src="images/customer1.webp" alt="Cliente real de Escencia Perfumería" loading="lazy">
+    </div>
+    <div class="customer-item">
+      <img src="images/customer2.webp" alt="Cliente real de Escencia Perfumería" loading="lazy">
+    </div>
+    <div class="customer-item">
+      <img src="images/customer3.webp" alt="Cliente real de Escencia Perfumería" loading="lazy">
+    </div>
+    <div class="customer-item">
+      <img src="images/customer4.webp" alt="Cliente real de Escencia Perfumería" loading="lazy">
+    </div>
+  </div>
+  <a href="https://instagram.com/escencia_parfums" target="_blank" class="btn-ghost customers-cta">Más testimonios en Instagram →</a>
+</section>
+
 <section id="ubicacion">
   <div class="section-head">
     <div>
-      <div class="num mono">05 / ubicación</div>
+      <div class="num mono">06 / ubicación</div>
       <h2>Dónde estamos</h2>
     </div>
     <p>Entrega local en La Paz. Envíos coordinados a toda la República.</p>
@@ -920,7 +958,7 @@
 <section id="perfil">
   <div class="section-head">
     <div>
-      <div class="num mono">06 / perfil</div>
+      <div class="num mono">07 / perfil</div>
       <h2>Mi Perfil</h2>
     </div>
     <p>Guarda tus datos una vez y agiliza tus próximos pedidos.</p>
