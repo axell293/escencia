@@ -1597,7 +1597,9 @@ window.__ESCENCIA_IMAGES__ = {
 
     function goToSlide(i){
       current = (i + slides.length) % slides.length;
-      slides[current].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+      const slide = slides[current];
+      const targetLeft = slide.offsetLeft - (track.clientWidth - slide.clientWidth) / 2;
+      track.scrollTo({left: targetLeft, behavior:'smooth'});
       updateDots(current);
     }
 
