@@ -457,6 +457,7 @@
 
   /* ---------- how it works ---------- */
   .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .steps-2{grid-template-columns:repeat(2,1fr);}
   .step{background:var(--charcoal); padding:26px 24px;}
   .step .s-num{font-family:'Cinzel',serif; font-size:34px; color:var(--red); font-weight:700; opacity:.85;}
   .step h4{font-size:16px; margin-top:12px; color:var(--chrome-1); font-weight:700;}
@@ -465,6 +466,7 @@
   /* ---------- payment ---------- */
   .pay-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
   .pay-grid-sub{margin-top:1px;}
+  .pay-grid-2{grid-template-columns:repeat(2,1fr);}
   .pay-card{
     border:1px solid var(--line); padding:22px 22px; background:var(--card);
   }
@@ -874,9 +876,9 @@
       <div class="num mono">02 / proceso</div>
       <h2>Cómo comprar</h2>
     </div>
-    <p>Tres pasos, sin complicaciones.</p>
+    <p>Dos pasos, sin complicaciones.</p>
   </div>
-  <div class="steps">
+  <div class="steps steps-2">
     <div class="step">
       <div class="s-num mono">01</div>
       <h4>Arma tu pedido</h4>
@@ -884,17 +886,12 @@
     </div>
     <div class="step">
       <div class="s-num mono">02</div>
-      <h4>Elige cómo pagar</h4>
-      <p>Con tarjeta directo en la página, por WhatsApp o transferencia BBVA.</p>
-    </div>
-    <div class="step">
-      <div class="s-num mono">03</div>
-      <h4>Coordina la entrega</h4>
-      <p>Entrega en punto acordado dentro de La Paz, BCS.</p>
+      <h4>Paga y recibe</h4>
+      <p>Con tarjeta, WhatsApp o transferencia, y comparte tus datos para la entrega local o el envío a tu ciudad.</p>
     </div>
   </div>
 
-  <div class="pay-grid pay-grid-sub">
+  <div class="pay-grid pay-grid-sub pay-grid-2">
     <div class="pay-card">
       <div class="icon">💳</div>
       <h4>Tarjeta en línea</h4>
@@ -903,15 +900,9 @@
     </div>
     <div class="pay-card">
       <div class="icon">💬</div>
-      <h4>WhatsApp</h4>
-      <p>Envía tu pedido y coordina pago y entrega en tiempo real.</p>
+      <h4>WhatsApp o transferencia</h4>
+      <p>Coordina tu pedido por WhatsApp o transfiere y envía tu comprobante ahí mismo.</p>
       <div class="details">612 200 6542</div>
-    </div>
-    <div class="pay-card">
-      <div class="icon">🏦</div>
-      <h4>Transferencia BBVA</h4>
-      <p>Transfiere el total y envía tu comprobante por WhatsApp.</p>
-      <div class="details">Datos disponibles al finalizar tu pedido</div>
     </div>
   </div>
 </section>
