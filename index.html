@@ -248,10 +248,10 @@
   @keyframes scrolldown{0%{opacity:0; transform:scaleY(0); transform-origin:top;} 40%{opacity:1; transform:scaleY(1); transform-origin:top;} 60%{opacity:1; transform:scaleY(1); transform-origin:bottom;} 100%{opacity:0; transform:scaleY(0); transform-origin:bottom;}}
 
   /* ---------- section shell ---------- */
-  section{padding:110px 6vw;}
+  section{padding:78px 6vw;}
   .section-head{
     display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:20px;
-    margin-bottom:56px; border-bottom:1px solid var(--line); padding-bottom:26px;
+    margin-bottom:38px; border-bottom:1px solid var(--line); padding-bottom:20px;
   }
   .section-head .num{font-family:'JetBrains Mono',monospace; color:var(--red-glow); font-size:12px; letter-spacing:.1em;}
   .section-head h2{
@@ -263,6 +263,16 @@
   .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
   .founder-photo-wrap{
     position:relative; display:flex; align-items:center; justify-content:center;
+  }
+  .founder-photo-inner{
+    width:100%; max-width:320px;
+  }
+  .founder-photo-media{
+    position:relative; width:100%; height:100%; overflow:hidden;
+  }
+  .founder-photo-media img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:grayscale(15%) contrast(1.05);
   }
   .founder-inset{
     position:absolute; bottom:-16px; right:-16px; width:34%;
@@ -277,7 +287,7 @@
     .founder-inset{width:30%; right:2px; bottom:-10px; transform:rotate(3deg);}
   }
   .founder-photo-frame{
-    position:relative; width:100%; max-width:320px; aspect-ratio:4/5;
+    position:relative; width:100%; aspect-ratio:4/5;
     border:1px solid var(--line); padding:10px;
     background:linear-gradient(160deg, var(--card), var(--charcoal));
     box-shadow:0 20px 50px -20px rgba(0,0,0,.7);
@@ -293,10 +303,6 @@
     -webkit-mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
     -webkit-mask-composite:xor; mask-composite:exclude;
     pointer-events:none; opacity:.5;
-  }
-  .founder-photo-frame img{
-    width:100%; height:100%; object-fit:cover; display:block;
-    filter:grayscale(15%) contrast(1.05);
   }
   .founder-caption{
     margin-top:16px; text-align:center;
@@ -447,21 +453,21 @@
 
   /* ---------- how it works ---------- */
   .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
-  .step{background:var(--charcoal); padding:36px 28px;}
-  .step .s-num{font-family:'Cinzel',serif; font-size:40px; color:var(--red); font-weight:700; opacity:.85;}
-  .step h4{font-size:16px; margin-top:16px; color:var(--chrome-1); font-weight:700;}
-  .step p{font-size:13.5px; color:var(--text-dim); margin-top:10px; line-height:1.7;}
+  .step{background:var(--charcoal); padding:26px 24px;}
+  .step .s-num{font-family:'Cinzel',serif; font-size:34px; color:var(--red); font-weight:700; opacity:.85;}
+  .step h4{font-size:16px; margin-top:12px; color:var(--chrome-1); font-weight:700;}
+  .step p{font-size:13.5px; color:var(--text-dim); margin-top:8px; line-height:1.6;}
 
   /* ---------- payment ---------- */
-  .pay-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .pay-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
   .pay-card{
-    border:1px solid var(--line); padding:30px 26px; background:var(--card);
+    border:1px solid var(--line); padding:22px 22px; background:var(--card);
   }
-  .pay-card .icon{font-size:26px;}
-  .pay-card h4{font-family:'Cinzel',serif; font-size:18px; margin-top:16px; color:var(--chrome-1);}
-  .pay-card p{font-size:13.5px; color:var(--text-dim); margin-top:10px; line-height:1.7;}
+  .pay-card .icon{font-size:24px;}
+  .pay-card h4{font-family:'Cinzel',serif; font-size:17px; margin-top:12px; color:var(--chrome-1);}
+  .pay-card p{font-size:13.5px; color:var(--text-dim); margin-top:8px; line-height:1.6;}
   .pay-card .details{
-    margin-top:16px; padding-top:16px; border-top:1px solid var(--line); font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--brass); line-height:2;
+    margin-top:12px; padding-top:12px; border-top:1px solid var(--line); font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--brass); line-height:1.9;
   }
 
   /* ---------- shipping ---------- */
@@ -473,7 +479,7 @@
   .ship-step .ss-num{color:var(--red-glow); font-size:12px; letter-spacing:.08em;}
   .ship-step p{font-size:13px; color:var(--text-dim); line-height:1.6;}
   .ship-cta{
-    margin-top:32px; padding:28px 32px; border:1px dashed var(--line);
+    margin-top:22px; padding:22px 28px; border:1px dashed var(--line);
     display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:18px;
   }
   .ship-cta span{font-size:14px; color:var(--text-dim); max-width:420px;}
@@ -673,7 +679,7 @@
     .hero-cta{margin-top:36px;}
     .scroll-hint{position:static; margin-top:40px; translate:none;}
     .pf-grid-2{grid-template-columns:1fr;}
-    section{padding:80px 6vw;}
+    section{padding:56px 6vw;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -745,7 +751,7 @@
 <section class="hero">
   <div class="eyebrow">100% Originales · For Him & Her</div>
   <h1>ESCENCIA</h1>
-  <p class="sub">Diseñador · Árabes · Nicho. Decants selectos para quien conoce su fragancia — sin comprar el frasco completo, sin resignar calidad.</p>
+  <p class="sub">Diseñador · Árabes · Nicho. Decants selectos, sin comprar el frasco completo ni resignar calidad.</p>
   <div class="tags">
     <span class="tag">Decants 3ml / 5ml</span>
     <span class="tag">Entrega local en La Paz, BCS</span>
@@ -762,7 +768,7 @@
 <section id="marca">
   <div class="about-grid">
     <div>
-      <p><strong>Escencia Perfumería</strong> nace para acercar fragancias de diseñador, árabes y de nicho a quienes buscan calidad real sin pagar el frasco completo. Cada decant se extrae directo del original, sin diluciones ni mezclas caseras.</p>
+      <p><strong>Escencia Perfumería</strong> acerca fragancias de diseñador, árabes y de nicho, extraídas directo del original, sin diluciones ni mezclas caseras.</p>
       <p>Trabajamos bajo pedido, con stock verificado y trato directo. Lo que ves en el frasco es lo que llega a tu piel.</p>
       <div class="stat-row">
         <div class="stat"><div class="n mono">9+</div><div class="l">Fragancias activas</div></div>
@@ -771,9 +777,11 @@
       </div>
     </div>
     <div class="founder-photo-wrap">
-      <div>
+      <div class="founder-photo-inner">
         <div class="founder-photo-frame">
-          <img src="images/founder.webp" alt="Fundador de Escencia Perfumería" loading="lazy">
+          <div class="founder-photo-media">
+            <img src="images/founder.webp" alt="Fundador de Escencia Perfumería" loading="lazy">
+          </div>
           <div class="founder-inset">
             <img src="images/founder-decant.webp" alt="Entrega de un decant Escencia Perfumería" loading="lazy">
           </div>
@@ -879,13 +887,13 @@
     <div class="pay-card">
       <div class="icon">💬</div>
       <h4>WhatsApp</h4>
-      <p>Envía tu pedido directo y coordina el pago y la entrega con nosotros en tiempo real.</p>
+      <p>Envía tu pedido y coordina pago y entrega en tiempo real.</p>
       <div class="details">612 200 6542</div>
     </div>
     <div class="pay-card">
       <div class="icon">🏦</div>
       <h4>Transferencia BBVA</h4>
-      <p>Transfiere el total de tu pedido y envía tu comprobante por WhatsApp.</p>
+      <p>Transfiere el total y envía tu comprobante por WhatsApp.</p>
       <div class="details">
         Titular: <b>Axel Aldair Miranda García</b><br>
         Banco: <b>BBVA</b><br>
@@ -919,31 +927,12 @@
     <div class="pay-card">
       <div class="icon">🚚</div>
       <h4>Paquetería</h4>
-      <p>Enviamos por Estafeta, Correos de México o DHL, según la paquetería con mejor cobertura en tu zona.</p>
+      <p>Estafeta, Correos de México o DHL, según cobertura en tu zona.</p>
     </div>
     <div class="pay-card">
       <div class="icon">🧾</div>
       <h4>Costo de envío</h4>
-      <p>Se cotiza según tu código postal y el peso del pedido. Te confirmamos el total antes de pagar.</p>
-    </div>
-  </div>
-
-  <div class="ship-steps">
-    <div class="ship-step">
-      <span class="ss-num mono">01</span>
-      <p>Arma tu pedido en el catálogo y agrégalo al carrito.</p>
-    </div>
-    <div class="ship-step">
-      <span class="ss-num mono">02</span>
-      <p>Envíanos tu código postal y dirección por WhatsApp.</p>
-    </div>
-    <div class="ship-step">
-      <span class="ss-num mono">03</span>
-      <p>Te cotizamos el envío y pagas producto + paquetería.</p>
-    </div>
-    <div class="ship-step">
-      <span class="ss-num mono">04</span>
-      <p>Recibes tu pedido con número de guía para rastrearlo.</p>
+      <p>Se cotiza según tu código postal y peso del pedido, antes de pagar.</p>
     </div>
   </div>
 
@@ -959,7 +948,7 @@
       <div class="num mono">05 / clientes</div>
       <h2>Clientes reales</h2>
     </div>
-    <p>Así llegan los pedidos, directo de quien ya los recibió.</p>
+    <p>Así llegan los pedidos, directo de quien los recibió.</p>
   </div>
 
   <div class="carousel">
