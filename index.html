@@ -261,6 +261,55 @@
 
   /* ---------- about ---------- */
   .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+  .founder-photo-wrap{
+    position:relative; display:flex; align-items:center; justify-content:center;
+  }
+  .founder-inset{
+    position:absolute; bottom:-22px; right:-26px; width:38%;
+    aspect-ratio:3/4; padding:6px; background:var(--charcoal);
+    border:1px solid var(--line); box-shadow:0 14px 30px -12px rgba(0,0,0,.8);
+    transform:rotate(4deg); z-index:2;
+  }
+  .founder-inset img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  @media(max-width:600px){
+    .founder-inset{width:34%; right:-14px; bottom:-16px;}
+  }
+  .founder-photo-frame{
+    position:relative; width:100%; max-width:320px; aspect-ratio:4/5;
+    border:1px solid var(--line); padding:10px;
+    background:linear-gradient(160deg, var(--card), var(--charcoal));
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.7);
+  }
+  .founder-photo-frame::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(circle at 50% 15%, rgba(200,30,44,.16), transparent 55%);
+  }
+  .founder-photo-frame::after{
+    content:""; position:absolute; top:-1px; left:-1px; right:-1px; bottom:-1px;
+    border:1px solid transparent;
+    background:linear-gradient(160deg, var(--chrome-2), transparent 30%, transparent 70%, var(--chrome-3)) border-box;
+    -webkit-mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    pointer-events:none; opacity:.5;
+  }
+  .founder-photo-frame img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:grayscale(15%) contrast(1.05);
+  }
+  .founder-caption{
+    margin-top:16px; text-align:center;
+  }
+  .founder-caption .fc-name{
+    font-family:'Cinzel',serif; font-weight:700; letter-spacing:.06em;
+    font-size:13px; text-transform:uppercase;
+    background:linear-gradient(180deg,var(--chrome-1),var(--chrome-3) 60%, var(--chrome-1));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .founder-caption .fc-role{
+    margin-top:4px; font-size:11.5px; color:var(--text-dim); letter-spacing:.03em;
+  }
   .about-grid .vial-art{
     aspect-ratio:1; position:relative; display:flex; align-items:center; justify-content:center;
   }
@@ -721,33 +770,19 @@
         <div class="stat"><div class="n mono">BCS</div><div class="l">Entrega local</div></div>
       </div>
     </div>
-    <div class="vial-art">
-      <svg width="100%" height="100%" viewBox="0 0 400 400" style="max-width:340px">
-        <defs>
-          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#c81e2c" stop-opacity="0.35"/>
-            <stop offset="100%" stop-color="#c81e2c" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#f2f2f4"/>
-            <stop offset="50%" stop-color="#7d7d85"/>
-            <stop offset="100%" stop-color="#e9e9ec"/>
-          </linearGradient>
-        </defs>
-        <circle cx="200" cy="200" r="160" fill="url(#glow)"/>
-        <g stroke="url(#chrome)" stroke-width="1.4" fill="none" opacity="0.9">
-          <circle cx="200" cy="200" r="120"/>
-          <circle cx="200" cy="200" r="90"/>
-          <circle cx="200" cy="200" r="60"/>
-        </g>
-        <rect x="172" y="150" width="56" height="110" rx="3" fill="#131315" stroke="url(#chrome)" stroke-width="1.5"/>
-        <rect x="184" y="122" width="32" height="30" rx="2" fill="#0a0a0b" stroke="url(#chrome)" stroke-width="1.5"/>
-        <circle cx="200" cy="110" r="12" fill="#0a0a0b" stroke="url(#chrome)" stroke-width="1.5"/>
-        <line x1="200" y1="40" x2="200" y2="10" stroke="#c81e2c" stroke-width="1"/>
-        <line x1="130" y1="200" x2="100" y2="200" stroke="#c81e2c" stroke-width="1"/>
-        <line x1="270" y1="200" x2="300" y2="200" stroke="#c81e2c" stroke-width="1"/>
-        <line x1="200" y1="360" x2="200" y2="390" stroke="#c81e2c" stroke-width="1"/>
-      </svg>
+    <div class="founder-photo-wrap">
+      <div>
+        <div class="founder-photo-frame">
+          <img src="images/founder.webp" alt="Fundador de Escencia Perfumería" loading="lazy">
+          <div class="founder-inset">
+            <img src="images/founder-decant.webp" alt="Entrega de un decant Escencia Perfumería" loading="lazy">
+          </div>
+        </div>
+        <div class="founder-caption">
+          <div class="fc-name">Detrás de Escencia</div>
+          <div class="fc-role">Cada pedido, atendido directo por mí</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
