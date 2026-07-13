@@ -35,7 +35,14 @@
   html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
 
   body{
-    background:var(--black);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(200,30,44,.14), transparent 40%),
+      radial-gradient(ellipse at 50% 38%, rgba(184,146,90,.05), transparent 55%),
+      radial-gradient(ellipse at 15% 75%, rgba(200,30,44,.06), transparent 45%),
+      radial-gradient(ellipse at 85% 92%, rgba(184,146,90,.05), transparent 45%),
+      var(--black);
+    background-attachment:fixed;
+    background-size:100% 100%;
     color:var(--text);
     font-family:'Inter',sans-serif;
     -webkit-font-smoothing:antialiased;
@@ -184,9 +191,6 @@
   .hero{
     min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; position:relative; padding:120px 6vw 80px;
-    background:
-      radial-gradient(circle at 50% 18%, rgba(200,30,44,.16), transparent 45%),
-      radial-gradient(ellipse at 50% 100%, rgba(184,146,90,.08), transparent 60%);
   }
   .hero::before{
     content:""; position:absolute; top:14%; left:50%; translate:-50% -50%;
