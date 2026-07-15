@@ -107,6 +107,19 @@
     cursor:pointer; font-family:'Inter',sans-serif; font-weight:600;
     transition:border-color .2s, background .2s;
   }
+  .profile-btn{
+    position:relative; display:flex; align-items:center; justify-content:center;
+    width:38px; height:38px; flex-shrink:0;
+    background:transparent; border:1px solid var(--line); color:var(--chrome-1);
+    cursor:pointer; transition:border-color .2s, color .2s;
+  }
+  .profile-btn:hover{border-color:var(--red); color:#fff;}
+  .profile-dot{
+    position:absolute; top:-3px; right:-3px; width:9px; height:9px; border-radius:50%;
+    background:var(--success); border:2px solid var(--black);
+    display:none;
+  }
+  .profile-dot.show{display:block;}
   .menu-btn{
     display:none; flex-direction:column; justify-content:center; gap:5px;
     width:36px; height:36px; background:transparent; border:1px solid var(--line);
@@ -191,6 +204,9 @@
   .payment-modal.status-fallido .pm-icon, .payment-modal.status-fallido h3{color:var(--red-glow);}
   .payment-modal.status-pendiente .pm-icon, .payment-modal.status-pendiente h3{color:var(--brass);}
   .cart-btn:hover{border-color:var(--red);}
+  @media(max-width:600px){
+    .profile-modal{padding:32px 22px;}
+  }
   .cart-count{
     background:var(--red); color:#fff; font-size:10px; font-weight:700;
     min-width:16px; height:16px; border-radius:50%;
@@ -557,16 +573,40 @@
 
   /* ---------- profile ---------- */
   .profile-box{max-width:560px; margin:0 auto; background:var(--card); border:1px solid var(--line); padding:44px;}
-  .drawer-profile{margin-bottom:22px; padding-bottom:22px; border-bottom:1px solid var(--line);}
-  .drawer-profile .profile-form{gap:14px;}
-  .drawer-profile .dp-label{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-dim); font-weight:600; margin-bottom:-2px;}
-  .drawer-profile .pf-submit{padding:12px 18px; font-size:13px;}
-  .drawer-profile .ps-greeting{margin-bottom:16px;}
-  .drawer-profile .ps-details{padding-top:14px; gap:10px;}
-  .drawer-profile .ps-actions{margin-top:16px;}
+
+  /* profile modal (accesible desde el ícono del header) */
+  .profile-overlay{
+    position:fixed; inset:0; z-index:250; background:rgba(0,0,0,.72); backdrop-filter:blur(4px);
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .profile-overlay.show{display:flex;}
+  .profile-modal{
+    position:relative; max-width:480px; width:100%; max-height:88vh; overflow-y:auto;
+    background:var(--charcoal); border:1px solid var(--line); padding:40px 32px;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,.8);
+  }
+  .profile-modal h3{font-family:'Cinzel',serif; font-size:20px; color:var(--chrome-1); font-weight:700; margin-bottom:24px; text-align:center;}
+  .profile-modal .profile-form{gap:14px;}
+  .profile-modal .dp-label{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-dim); font-weight:600; margin-bottom:-2px;}
+  .profile-modal .pf-submit{padding:12px 18px; font-size:13px;}
+  .ps-summary{
+    width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:none; border:none; cursor:pointer; padding:6px 0; text-align:left;
+  }
+  .ps-summary-text{font-size:13px; color:var(--chrome-1); font-weight:500;}
+  .ps-summary-text b{font-weight:700;}
+  .ps-summary-toggle{font-size:10.5px; color:var(--text-dim); letter-spacing:.03em; flex-shrink:0;}
+  .profile-modal .ps-details{padding-top:14px; gap:10px; margin-top:10px; border-top:1px solid var(--line);}
+  .profile-modal .ps-actions{margin-top:16px;}
   .profile-form{display:flex; flex-direction:column; gap:20px;}
   .pf-row{display:flex; flex-direction:column; gap:8px;}
   .pf-row label{font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--text-dim); font-weight:600;}
+  .pf-required{color:var(--red-glow);}
+  .pf-error{
+    display:none; font-size:11.5px; color:var(--red-glow); line-height:1.5; margin-top:-4px;
+  }
+  .pf-row input.invalid{border-color:var(--red-glow);}
+  .pf-row input.invalid ~ .pf-error{display:block;}
   .pf-row input{
     background:var(--charcoal); border:1px solid var(--line); color:var(--text);
     padding:13px 16px; font-family:'Inter',sans-serif; font-size:16px; outline:none;
@@ -630,6 +670,10 @@
   .drawer-head button{background:none; border:none; color:var(--text-dim); font-size:22px; cursor:pointer;}
   .drawer-items{flex:1; overflow-y:auto; padding:10px 28px;}
   .cart-item{display:flex; justify-content:space-between; align-items:center; padding:18px 0; border-bottom:1px solid var(--line); gap:12px;}
+  .cart-item .ci-thumb{
+    width:44px; height:44px; flex-shrink:0; border:1px solid var(--line); overflow:hidden; background:var(--card);
+  }
+  .cart-item .ci-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
   .cart-item .ci-info{min-width:0; flex:1;}
   .cart-item .ci-info p{font-size:14px; font-weight:600; color:var(--text); word-break:break-word;}
   .cart-item .ci-info span{font-size:11.5px; color:var(--text-dim); font-family:'JetBrains Mono',monospace;}
@@ -738,9 +782,12 @@
     <a href="#como-funciona">Cómo comprar</a>
     <a href="#envios">Envíos</a>
     <a href="#clientes">Clientes</a>
-    <a href="#" onclick="openCart(); return false;">Mi Perfil</a>
   </nav>
   <div class="header-actions">
+    <button class="profile-btn" onclick="openProfileModal()" aria-label="Mi perfil">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="profile-dot" id="profileDot"></span>
+    </button>
     <button class="cart-btn" onclick="openCart()">
       Carrito <span class="cart-count mono" id="cartCount">0</span>
     </button>
@@ -755,7 +802,7 @@
   <a href="#como-funciona" onclick="closeMobileMenu()">Cómo comprar</a>
   <a href="#envios" onclick="closeMobileMenu()">Envíos</a>
   <a href="#clientes" onclick="closeMobileMenu()">Clientes</a>
-  <a href="#" onclick="closeMobileMenu(); openCart(); return false;">Mi Perfil</a>
+  <a href="#" onclick="closeMobileMenu(); openProfileModal(); return false;">Mi Perfil</a>
 </div>
 
 <a href="https://wa.me/526122006542" target="_blank" class="wa-float" aria-label="WhatsApp">
@@ -777,6 +824,64 @@
     <div class="pm-order" id="pmOrder"></div>
     <a href="#" class="btn-primary pm-cta" id="pmWhatsapp" target="_blank">Confirmar mi entrega por WhatsApp</a>
     <p class="pm-note">Este último paso es necesario para que coordinemos tu envío o entrega.</p>
+  </div>
+</div>
+
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-modal">
+    <button class="pm-close" onclick="closeProfileModal()" aria-label="Cerrar">&times;</button>
+    <h3>Mi perfil</h3>
+
+    <form id="profileForm" class="profile-form" onsubmit="saveProfile(event)">
+      <p class="dp-label">Tus datos de entrega</p>
+      <div class="pf-row">
+        <label>Nombre completo</label>
+        <input type="text" id="pfName" required placeholder="Tu nombre">
+      </div>
+      <div class="pf-row">
+        <label>Teléfono</label>
+        <input type="tel" id="pfPhone" required placeholder="612 000 0000">
+      </div>
+      <div class="pf-row">
+        <label>Dirección (calle, número y colonia) <span class="pf-required">*</span></label>
+        <input type="text" id="pfAddress" required placeholder="Ej. Calle Reforma 123, Col. Centro" oninput="this.classList.remove('invalid'); document.getElementById('pfAddressError').style.display='none';">
+        <span class="pf-error" id="pfAddressError">Necesitamos tu dirección para poder entregarte el pedido.</span>
+      </div>
+      <div class="pf-grid-2">
+        <div class="pf-row">
+          <label>Ciudad / Estado</label>
+          <input type="text" id="pfCity" placeholder="La Paz, BCS">
+        </div>
+        <div class="pf-row">
+          <label>Código Postal</label>
+          <input type="text" id="pfZip" placeholder="23000">
+        </div>
+      </div>
+      <div class="pf-row">
+        <label>Correo (opcional)</label>
+        <input type="email" id="pfEmail" placeholder="tucorreo@ejemplo.com">
+      </div>
+      <button type="submit" class="btn-primary pf-submit">Guardar mis datos</button>
+      <p class="pf-note">Se guardan en este navegador para agilizar tu próximo pedido.</p>
+    </form>
+
+    <div id="profileSaved" class="profile-saved" style="display:none;">
+      <button type="button" class="ps-summary" onclick="toggleProfileDetails()">
+        <span class="ps-summary-text">✦ <b id="psName"></b> · registrado</span>
+        <span class="ps-summary-toggle" id="psToggleIcon">Ver datos ▾</span>
+      </button>
+      <div class="ps-details" id="psDetails" style="display:none;">
+        <div class="ps-row"><span class="ps-label">Teléfono</span><span id="psPhone"></span></div>
+        <div class="ps-row"><span class="ps-label">Dirección</span><span id="psAddress"></span></div>
+        <div class="ps-row"><span class="ps-label">Ciudad</span><span id="psCity"></span></div>
+        <div class="ps-row"><span class="ps-label">C.P.</span><span id="psZip"></span></div>
+        <div class="ps-row" id="psEmailRow"><span class="ps-label">Correo</span><span id="psEmail"></span></div>
+        <div class="ps-actions">
+          <button class="btn-ghost" onclick="editProfile()">Editar datos</button>
+          <button class="ps-clear" onclick="clearProfile()">Borrar</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1017,58 +1122,6 @@
   </div>
   <div class="drawer-items" id="drawerItems"></div>
   <div class="drawer-foot">
-    <div class="drawer-profile">
-      <form id="profileForm" class="profile-form" onsubmit="saveProfile(event)">
-        <p class="dp-label">Tus datos de entrega</p>
-        <div class="pf-row">
-          <label>Nombre completo</label>
-          <input type="text" id="pfName" required placeholder="Tu nombre">
-        </div>
-        <div class="pf-row">
-          <label>Teléfono</label>
-          <input type="tel" id="pfPhone" required placeholder="612 000 0000">
-        </div>
-        <div class="pf-row">
-          <label>Dirección (calle, número y colonia)</label>
-          <input type="text" id="pfAddress" placeholder="Ej. Calle Reforma 123, Col. Centro">
-        </div>
-        <div class="pf-grid-2">
-          <div class="pf-row">
-            <label>Ciudad / Estado</label>
-            <input type="text" id="pfCity" placeholder="La Paz, BCS">
-          </div>
-          <div class="pf-row">
-            <label>Código Postal</label>
-            <input type="text" id="pfZip" placeholder="23000">
-          </div>
-        </div>
-        <div class="pf-row">
-          <label>Correo (opcional)</label>
-          <input type="email" id="pfEmail" placeholder="tucorreo@ejemplo.com">
-        </div>
-        <button type="submit" class="btn-primary pf-submit">Guardar mis datos</button>
-        <p class="pf-note">Se guardan en este navegador para agilizar tu próximo pedido.</p>
-      </form>
-
-      <div id="profileSaved" class="profile-saved" style="display:none;">
-        <div class="ps-greeting">
-          <span class="ps-icon">✦</span>
-          <h3>Hola, <span id="psName"></span> 👋</h3>
-        </div>
-        <div class="ps-details">
-          <div class="ps-row"><span class="ps-label">Teléfono</span><span id="psPhone"></span></div>
-          <div class="ps-row"><span class="ps-label">Dirección</span><span id="psAddress"></span></div>
-          <div class="ps-row"><span class="ps-label">Ciudad</span><span id="psCity"></span></div>
-          <div class="ps-row"><span class="ps-label">C.P.</span><span id="psZip"></span></div>
-          <div class="ps-row" id="psEmailRow"><span class="ps-label">Correo</span><span id="psEmail"></span></div>
-        </div>
-        <div class="ps-actions">
-          <button class="btn-ghost" onclick="editProfile()">Editar datos</button>
-          <button class="ps-clear" onclick="clearProfile()">Borrar</button>
-        </div>
-      </div>
-    </div>
-
     <div class="total-row">
       <span class="t-label">Total</span>
       <span class="t-amount mono" id="cartTotal">$0</span>
@@ -1276,7 +1329,7 @@ window.__ESCENCIA_IMAGES__ = {
           <div class="desc">${item.d}</div>
           <div class="p-footer">
             <div class="price mono">$${item.p}</div>
-            <button class="add-btn ${isAdded ? 'added' : ''}" onclick="addToCart('${item.n.replace(/'/g,"\\'")}', ${item.p}, '${currentSize}', this)">${isAdded ? '✓' : '+'}</button>
+            <button class="add-btn ${isAdded ? 'added' : ''}" onclick="addToCart('${item.n.replace(/'/g,"\\'")}', ${item.p}, '${currentSize}', this, '${item.img || ''}')">${isAdded ? '✓' : '+'}</button>
           </div>
         </div>`;
       grid.appendChild(el);
@@ -1308,12 +1361,12 @@ window.__ESCENCIA_IMAGES__ = {
     renderCatalog();
   }
 
-  function addToCart(name, price, size, btn){
+  function addToCart(name, price, size, btn, img){
     const key = name + "|" + size;
     if(cart[key]){
       cart[key].qty += 1;
     } else {
-      cart[key] = {name, price, size, qty:1};
+      cart[key] = {name, price, size, qty:1, img: img || ''};
     }
     if(btn){ btn.classList.add('added'); btn.textContent = '✓'; }
     updateCartUI();
@@ -1354,6 +1407,7 @@ window.__ESCENCIA_IMAGES__ = {
       itemsEl.innerHTML = keys.map(key => {
         const it = cart[key];
         return `<div class="cart-item">
+          ${it.img ? `<div class="ci-thumb"><img src="${it.img}" alt="${it.name}" loading="lazy"></div>` : ''}
           <div class="ci-info">
             <p>${it.name}</p>
             <span>${it.size} · $${it.price} c/u</span>
@@ -1388,10 +1442,25 @@ window.__ESCENCIA_IMAGES__ = {
 
   function saveProfile(event){
     event.preventDefault();
+
+    const addressInput = document.getElementById('pfAddress');
+    const addressError = document.getElementById('pfAddressError');
+    const address = addressInput.value.trim();
+
+    if(!address){
+      addressInput.classList.add('invalid');
+      addressError.style.display = 'block';
+      addressInput.focus();
+      showToast('Falta tu dirección — es obligatoria para entregarte el pedido');
+      return;
+    }
+    addressInput.classList.remove('invalid');
+    addressError.style.display = 'none';
+
     profile = {
       name: document.getElementById('pfName').value.trim(),
       phone: document.getElementById('pfPhone').value.trim(),
-      address: document.getElementById('pfAddress').value.trim(),
+      address,
       city: document.getElementById('pfCity').value.trim(),
       zip: document.getElementById('pfZip').value.trim(),
       email: document.getElementById('pfEmail').value.trim(),
@@ -1420,6 +1489,18 @@ window.__ESCENCIA_IMAGES__ = {
     } else {
       emailRow.style.display = 'none';
     }
+    // siempre colapsado al mostrar, para no ocupar espacio del carrito
+    document.getElementById('psDetails').style.display = 'none';
+    document.getElementById('psToggleIcon').textContent = 'Ver datos ▾';
+    document.getElementById('profileDot').classList.add('show');
+  }
+
+  function toggleProfileDetails(){
+    const details = document.getElementById('psDetails');
+    const icon = document.getElementById('psToggleIcon');
+    const isOpen = details.style.display === 'flex';
+    details.style.display = isOpen ? 'none' : 'flex';
+    icon.textContent = isOpen ? 'Ver datos ▾' : 'Ocultar ▴';
   }
 
   function editProfile(){
@@ -1440,6 +1521,7 @@ window.__ESCENCIA_IMAGES__ = {
     document.getElementById('profileForm').reset();
     document.getElementById('profileSaved').style.display = 'none';
     document.getElementById('profileForm').style.display = 'flex';
+    document.getElementById('profileDot').classList.remove('show');
     updateCartUI();
     showToast('Datos borrados');
   }
@@ -1482,10 +1564,17 @@ window.__ESCENCIA_IMAGES__ = {
 
   function goToProfile(){
     dismissNudge();
-    openCart();
+    openProfileModal();
   }
   function dismissNudge(){
     document.getElementById('registerNudge').classList.remove('show');
+  }
+
+  function openProfileModal(){
+    document.getElementById('profileOverlay').classList.add('show');
+  }
+  function closeProfileModal(){
+    document.getElementById('profileOverlay').classList.remove('show');
   }
   if(!profile){
     setTimeout(() => {
@@ -1561,7 +1650,7 @@ window.__ESCENCIA_IMAGES__ = {
     const footer = (b.price != null)
       ? `<div class="fbt-footer">
            <div class="fbt-price mono">$${b.price}</div>
-           <button class="add-btn ${isAdded ? 'added' : ''}" onclick="addToCart('${b.n.replace(/'/g,"\\'")}', ${b.price}, 'Frasco completo', this)">${isAdded ? '✓' : '+'}</button>
+           <button class="add-btn ${isAdded ? 'added' : ''}" onclick="addToCart('${b.n.replace(/'/g,"\\'")}', ${b.price}, 'Frasco completo', this, '${b.img || ''}')">${isAdded ? '✓' : '+'}</button>
          </div>`
       : `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar el ' + b.full + ' en frasco completo')}" target="_blank" class="fbt-quote-btn">Cotizar por WhatsApp</a>`;
     return `
