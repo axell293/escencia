@@ -41,18 +41,35 @@ exports.handler = async (event) => {
       currency_id: 'MXN',
     }));
 
+    // Armamos un resumen legible del pedido para mostrarlo cuando el cliente regrese del pago
+    const total = mpItems.reduce((sum, it) => sum + it.unit_price * it.quantity, 0);
+    const orderSummary = items
+      .map((it) => `${it.name} (${it.size}) x${it.qty}`)
+      .join(' | ') + ` | Total: $${total}`;
+    const encodedOrder = encodeURIComponent(orderSummary);
+
     const siteUrl = event.headers.origin || `https://${event.headers.host}`;
 
     const preference = {
       items: mpItems,
       payer: customer && customer.name ? { name: customer.name, phone: { number: customer.phone || '' } } : undefined,
       back_urls: {
-        success: `${siteUrl}/?pago=exito`,
+        success: `${siteUrl}/?pago=exito&pedido=${encodedOrder}`,
         failure: `${siteUrl}/?pago=fallido`,
-        pending: `${siteUrl}/?pago=pendiente`,
+        pending: `${siteUrl}/?pago=pendiente&pedido=${encodedOrder}`,
       },
       auto_return: 'approved',
       statement_descriptor: 'ESCENCIA PERFUMES',
+      notification_url: `${siteUrl}/.netlify/functions/mercadopago-webhook`,
+      metadata: {
+        customer_name: (customer && customer.name) || '',
+        customer_phone: (customer && customer.phone) || '',
+        customer_address: (customer && customer.address) || '',
+        customer_city: (customer && customer.city) || '',
+        customer_zip: (customer && customer.zip) || '',
+        customer_email: (customer && customer.email) || '',
+        order_summary: orderSummary,
+      },
     };
 
     const mpRes = await fetch('https://api.mercadopago.com/checkout/preferences', {
