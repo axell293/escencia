@@ -1259,7 +1259,14 @@ window.__ESCENCIA_IMAGES__ = {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           items,
-          customer: profile ? {name: profile.name, phone: profile.phone} : null,
+          customer: profile ? {
+            name: profile.name,
+            phone: profile.phone,
+            address: profile.address,
+            city: profile.city,
+            zip: profile.zip,
+            email: profile.email,
+          } : null,
         }),
       });
       const data = await res.json();
