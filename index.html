@@ -385,7 +385,7 @@
   }
   .size-tab.active{border-color:var(--red); color:#fff; background:rgba(200,30,44,.12);}
 
-  .gender-tabs{display:flex; align-items:center; gap:0; margin-bottom:44px;}
+  .gender-tabs{display:flex; align-items:center; gap:0; margin-bottom:44px; flex-wrap:wrap; row-gap:10px;}
   .gender-tab{
     font-family:'Inter',sans-serif; font-size:12px; font-weight:600; letter-spacing:.04em;
     padding:4px 0; border:none; background:transparent; color:var(--text-dim);
@@ -431,6 +431,41 @@
     content:""; position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(10,10,11,0) 55%, rgba(10,10,11,.55) 100%);
     pointer-events:none;
+  }
+  .new-badge{
+    position:absolute; top:10px; left:10px; z-index:2;
+    display:flex; align-items:center; gap:5px;
+    background:rgba(10,10,11,.82); border:1px solid var(--red);
+    color:var(--chrome-1); font-family:'Inter',sans-serif; font-weight:700;
+    font-size:9.5px; letter-spacing:.07em; text-transform:uppercase;
+    padding:5px 9px; backdrop-filter:blur(4px);
+    box-shadow:0 0 14px -2px rgba(255,47,63,.5);
+  }
+  .new-badge .nb-dot{
+    width:5px; height:5px; border-radius:50%; background:var(--red-glow);
+    box-shadow:0 0 6px 1px var(--red-glow);
+    animation:nbPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes nbPulse{0%,100%{opacity:1;} 50%{opacity:.35;}}
+
+  .novedades-strip{
+    display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;
+    margin:-30px 5vw 0; padding:16px 22px; border:1px solid var(--line); background:var(--charcoal);
+    text-decoration:none; cursor:pointer; transition:border-color .2s, background .2s;
+    position:relative; z-index:5;
+  }
+  .novedades-strip:hover{border-color:var(--red); background:#1c1c20;}
+  .ns-icon{font-size:16px; flex-shrink:0;}
+  .ns-text{font-size:12.5px; color:var(--text-dim); text-align:center;}
+  .ns-text b{color:var(--chrome-1); font-family:'Cinzel',serif; letter-spacing:.03em;}
+  .ns-cta{
+    flex-shrink:0; font-family:'Inter',sans-serif; font-weight:700; font-size:11px;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--red-glow);
+    display:flex; align-items:center; gap:6px; white-space:nowrap;
+  }
+  @media(max-width:600px){
+    .novedades-strip{margin:-24px 4vw 0; padding:13px 16px; gap:10px;}
+    .ns-text{font-size:11.5px; text-align:left;}
   }
   .product .p-body{padding:22px 24px 26px; display:flex; flex-direction:column; flex-grow:1;}
   .product .p-index{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-dim);}
@@ -902,6 +937,12 @@
   <div class="scroll-hint">Desliza</div>
 </section>
 
+<a href="#catalogo" class="novedades-strip" onclick="setTimeout(function(){switchGender('new');}, 350);">
+  <span class="ns-icon">✨</span>
+  <span class="ns-text"><b>Novedades</b> — 6 fragancias recién agregadas al catálogo</span>
+  <span class="ns-cta">Ver ahora →</span>
+</a>
+
 <section id="marca">
   <div class="about-grid">
     <div>
@@ -953,6 +994,7 @@
   </div>
 
   <div class="gender-tabs">
+    <button class="gender-tab" data-gender="new" onclick="switchGender('new')">✨ Novedades</button>
     <button class="gender-tab active" data-gender="him" onclick="switchGender('him')">Para Él</button>
     <button class="gender-tab" data-gender="unisex" onclick="switchGender('unisex')">Unisex</button>
     <button class="gender-tab" data-gender="her" onclick="switchGender('her')">Para Ella</button>
@@ -964,7 +1006,7 @@
 
   <div class="catalog-wip" id="catalogWip" style="display:none;">
     <span class="wip-icon">🚧</span>
-    <span class="wip-note">Estás viendo nuestra línea unisex. Pronto sumamos una línea exclusiva para ella.</span>
+    <span class="wip-note">Estamos ampliando nuestra línea exclusiva para ella. Pronto más fragancias.</span>
   </div>
 
   <div class="no-results" id="noResults" style="display:none;">
@@ -1163,6 +1205,12 @@ window.__ESCENCIA_IMAGES__ = {
   "very_good_girl": "images/very_good_girl.webp",
   "versace_eros": "images/versace_eros.webp",
   "riiffs_freeze": "images/riiffs_freeze.webp",
+  "waha": "images/waha.webp",
+  "odyssey_aqua": "images/odyssey_aqua.webp",
+  "kos_muse": "images/kos_muse.webp",
+  "katy_perry": "images/katy_perry.webp",
+  "ariana_grande": "images/ariana_grande.webp",
+  "fantasy": "images/fantasy.webp",
 };
 </script>
 <script>
@@ -1171,6 +1219,8 @@ window.__ESCENCIA_IMAGES__ = {
   const CATALOG = {
     "5ml": [
       {n:"Armani Code", p:105, d:"Limón y bergamota de salida, fondo de guayaco y haba tonka.", img:IMG.armani_code, cat:"him"},
+      {n:"Khamrah Waha", p:105, d:"Lima y salvia frescas de salida, corazón de iris y jengibre sobre fondo de vainilla y almizcle.", img:IMG.waha, cat:"him", isNew:true},
+      {n:"Odyssey Aqua", p:65, d:"Notas acuáticas y cítricas frescas con fondo marino y almizclado, ideal para el día.", img:IMG.odyssey_aqua, cat:"him", isNew:true},
       {n:"Dolce & Gabbana The One", p:105, d:"Pomelo y albahaca frescos sobre ámbar, cedro y tabaco.", img:IMG.dolce_gabbana, cat:"him"},
       {n:"Versace Eros", p:95, d:"Menta fresca y vainilla dulce en un fondo intenso y envolvente.", img:IMG.versace_eros, cat:"him"},
       {n:"Asad Elixir", p:75, d:"Azafrán y oud sobre un fondo de ámbar profundo. Uso nocturno.", img:IMG.asad_elixir, cat:"him"},
@@ -1178,12 +1228,18 @@ window.__ESCENCIA_IMAGES__ = {
       {n:"Hawas Kobra", p:75, d:"Canela, jengibre y cítricos sobre una base especiada intensa.", img:IMG.hawas_kobra, cat:"him"},
       {n:"Nitro Red", p:65, d:"Manzana verde y sandía frescas, fondo amaderado ambarino.", img:IMG.nitro_red, cat:"him"},
       {n:"Art of Universe", p:80, d:"Mandarina, pera y toques de jengibre sobre fondo amaderado.", img:IMG.pride, cat:"him"},
+      {n:"Kos Muse", p:95, d:"Frutos rojos y flores blancas sobre un fondo cálido de almizcle y vainilla.", img:IMG.kos_muse, cat:"her", isNew:true},
+      {n:"Katy Perry Purr", p:65, d:"Manzana y guayaba frescas, corazón de pralina y fondo de vainilla y almizcle.", img:IMG.katy_perry, cat:"her", isNew:true},
+      {n:"Ariana Grande Cloud", p:80, d:"Pera y lavanda de salida, corazón de coco cremoso y fondo de vainilla y almizcle.", img:IMG.ariana_grande, cat:"her", isNew:true},
+      {n:"Fantasy Britney Spears", p:65, d:"Kiwi y lichi rojo de salida, jazmín y chocolate blanco sobre fondo de almizcle dulce.", img:IMG.fantasy, cat:"her", isNew:true},
       {n:"Hawas London", p:95, d:"Bergamota y limón de salida, lavanda y fondo ambarino.", img:IMG.hawas_london, cat:"unisex"},
       {n:"Sharaf Blend", p:70, d:"Acordes gourmand-orientales con especias y madera ahumada.", img:IMG.sharaf_blend, cat:"unisex"},
       {n:"9AM", p:65, d:"Salida cítrica fresca, corazón floral y fondo almizclado.", img:IMG["9am"], cat:"unisex"},
     ],
     "3ml": [
       {n:"Armani Code", p:75, d:"Limón y bergamota de salida, fondo de guayaco y haba tonka.", img:IMG.armani_code, cat:"him"},
+      {n:"Khamrah Waha", p:65, d:"Lima y salvia frescas de salida, corazón de iris y jengibre sobre fondo de vainilla y almizcle.", img:IMG.waha, cat:"him", isNew:true},
+      {n:"Odyssey Aqua", p:45, d:"Notas acuáticas y cítricas frescas con fondo marino y almizclado, ideal para el día.", img:IMG.odyssey_aqua, cat:"him", isNew:true},
       {n:"Dolce & Gabbana The One", p:75, d:"Pomelo y albahaca frescos sobre ámbar, cedro y tabaco.", img:IMG.dolce_gabbana, cat:"him"},
       {n:"Versace Eros", p:70, d:"Menta fresca y vainilla dulce en un fondo intenso y envolvente.", img:IMG.versace_eros, cat:"him"},
       {n:"Asad Elixir", p:55, d:"Azafrán y oud sobre un fondo de ámbar profundo. Uso nocturno.", img:IMG.asad_elixir, cat:"him"},
@@ -1191,6 +1247,10 @@ window.__ESCENCIA_IMAGES__ = {
       {n:"Hawas Kobra", p:55, d:"Canela, jengibre y cítricos sobre una base especiada intensa.", img:IMG.hawas_kobra, cat:"him"},
       {n:"Nitro Red", p:45, d:"Manzana verde y sandía frescas, fondo amaderado ambarino.", img:IMG.nitro_red, cat:"him"},
       {n:"Art of Universe", p:55, d:"Mandarina, pera y toques de jengibre sobre fondo amaderado.", img:IMG.pride, cat:"him"},
+      {n:"Kos Muse", p:60, d:"Frutos rojos y flores blancas sobre un fondo cálido de almizcle y vainilla.", img:IMG.kos_muse, cat:"her", isNew:true},
+      {n:"Katy Perry Purr", p:45, d:"Manzana y guayaba frescas, corazón de pralina y fondo de vainilla y almizcle.", img:IMG.katy_perry, cat:"her", isNew:true},
+      {n:"Ariana Grande Cloud", p:50, d:"Pera y lavanda de salida, corazón de coco cremoso y fondo de vainilla y almizcle.", img:IMG.ariana_grande, cat:"her", isNew:true},
+      {n:"Fantasy Britney Spears", p:45, d:"Kiwi y lichi rojo de salida, jazmín y chocolate blanco sobre fondo de almizcle dulce.", img:IMG.fantasy, cat:"her", isNew:true},
       {n:"Hawas London", p:65, d:"Bergamota y limón de salida, lavanda y fondo ambarino.", img:IMG.hawas_london, cat:"unisex"},
       {n:"Sharaf Blend", p:50, d:"Acordes gourmand-orientales con especias y madera ahumada.", img:IMG.sharaf_blend, cat:"unisex"},
       {n:"9AM", p:45, d:"Salida cítrica fresca, corazón floral y fondo almizclado.", img:IMG["9am"], cat:"unisex"},
@@ -1301,6 +1361,7 @@ window.__ESCENCIA_IMAGES__ = {
     const countEl = document.getElementById('resultsCount');
 
     const baseItems = CATALOG[currentSize].filter(item => {
+      if(currentGender === 'new') return !!item.isNew;
       if(currentGender === 'unisex') return item.cat === 'unisex';
       // "him" y "her" muestran también los unisex
       return item.cat === currentGender || item.cat === 'unisex';
@@ -1309,7 +1370,7 @@ window.__ESCENCIA_IMAGES__ = {
     const q = searchQuery.trim().toLowerCase();
     const items = q ? baseItems.filter(item => item.n.toLowerCase().includes(q)) : baseItems;
 
-    wipEl.style.display = currentGender === 'her' ? 'flex' : 'none';
+    wipEl.style.display = 'none';
 
     if(items.length === 0){
       grid.style.display = 'none';
@@ -1329,7 +1390,7 @@ window.__ESCENCIA_IMAGES__ = {
       const el = document.createElement('div');
       el.className = 'product';
       el.innerHTML = `
-        <div class="p-media">${item.img ? `<img src="${item.img}" alt="${item.n}" loading="lazy">` : ''}</div>
+        <div class="p-media">${item.isNew ? `<span class="new-badge"><span class="nb-dot"></span>Recién agregado</span>` : ''}${item.img ? `<img src="${item.img}" alt="${item.n}" loading="lazy">` : ''}</div>
         <div class="p-body">
           <div class="p-index mono">N.${String(i+1).padStart(2,'0')} — ${currentSize}</div>
           <h3>${item.n}</h3>
