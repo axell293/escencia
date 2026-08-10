@@ -400,7 +400,24 @@
   }
   .kit-cta:hover{background:#a8172a;}
   @media (max-width:860px){
-    .kits-grid{grid-template-columns:1fr; gap:16px;}
+    .kits-grid{grid-template-columns:1fr 1fr; gap:16px;}
+  }
+  @media (max-width:600px){
+    .kits-grid{grid-template-columns:repeat(3,1fr); gap:8px;}
+    .kit-card:hover{transform:none;}
+    .kit-body{padding:9px 8px 10px; gap:5px;}
+    .kit-tag{font-size:8px; letter-spacing:.03em; line-height:1.25;}
+    .kit-body h3{display:none;}
+    .kit-includes{display:none;}
+    .kit-note{display:none;}
+    .kit-footer{
+      flex-direction:column; align-items:stretch; gap:6px;
+      margin-top:2px; padding-top:8px;
+    }
+    .kit-price{font-size:14px; text-align:left;}
+    .kit-cta{
+      padding:7px 4px; font-size:9px; letter-spacing:.02em; text-align:center;
+    }
   }
 
   /* ---------- about ---------- */
