@@ -216,11 +216,11 @@
   .menu-btn span{width:16px; height:1px; background:var(--chrome-1); margin:0 auto; display:block;}
   .mobile-menu{
     position:fixed; top:69px; left:0; right:0; z-index:99;
-    background:var(--menu-bg); border-bottom:1px solid var(--line);
+    background:var(--menu-bg); border-bottom:0 solid transparent;
     display:flex; flex-direction:column;
-    max-height:0; overflow-y:auto; transition:max-height .3s ease;
+    max-height:0; overflow:hidden; transition:max-height .3s ease, border-color .3s ease;
   }
-  .mobile-menu.open{max-height:178px;}
+  .mobile-menu.open{max-height:380px; border-bottom-width:1px; border-bottom-color:var(--line); overflow-y:auto;}
   .mobile-menu a{
     padding:18px 6vw; color:var(--text-dim); text-decoration:none; font-size:14px;
     border-bottom:1px solid var(--line); letter-spacing:.03em;
@@ -399,7 +399,9 @@
     filter:drop-shadow(0 12px 18px rgba(0,0,0,.4)) drop-shadow(0 0 16px rgba(244,239,229,.28));
   }
   @media(max-width:700px){
-    .section-mascot{display:none;}
+    .section-head-wrap{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:end;}
+    .section-head-wrap .section-head{min-width:0;}
+    .section-mascot{display:block; width:62px; margin:0 2px 18px 0; align-self:end;}
   }
 
   /* ---------- kits ---------- */
@@ -631,23 +633,31 @@
   @keyframes nbPulse{0%,100%{opacity:1;} 50%{opacity:.35;}}
 
   .novedades-strip{
-    display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;
-    margin:-30px 5vw 0; padding:16px 22px; border:1px solid var(--line); background:var(--charcoal);
-    text-decoration:none; cursor:pointer; transition:border-color .2s, background .2s;
-    position:relative; z-index:5;
+    display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:16px;
+    width:min(calc(100% - 10vw),960px); margin:-30px auto 0; padding:14px 16px;
+    border:1px solid color-mix(in srgb,var(--red) 36%,var(--line)); border-radius:14px;
+    background:linear-gradient(110deg,color-mix(in srgb,var(--card) 96%,var(--red)),var(--charcoal));
+    box-shadow:0 18px 45px -34px rgba(200,30,44,.75);
+    text-decoration:none; cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s;
+    position:relative; z-index:5; overflow:hidden;
   }
-  .novedades-strip:hover{border-color:var(--red); background:var(--hover-bg);}
-  .ns-icon{font-size:16px; flex-shrink:0;}
-  .ns-text{font-size:12.5px; color:var(--text-dim); text-align:center;}
-  .ns-text b{color:var(--chrome-1); font-family:'Playfair Display',serif; letter-spacing:.03em;}
+  .novedades-strip::before{content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--red);}
+  .novedades-strip:hover{transform:translateY(-2px); border-color:var(--red); box-shadow:0 22px 48px -30px rgba(200,30,44,.8);}
+  .ns-icon{width:38px; height:38px; border-radius:50%; display:grid; place-items:center; font-size:16px; flex-shrink:0; background:rgba(200,30,44,.1); color:var(--red-glow);}
+  .ns-text{font-size:12.5px; color:var(--text-dim); text-align:left; line-height:1.45;}
+  .ns-text b{display:block; color:var(--chrome-1); font-family:'Inter',sans-serif; font-size:10px; letter-spacing:.13em; text-transform:uppercase; margin-bottom:2px;}
   .ns-cta{
-    flex-shrink:0; font-family:'Inter',sans-serif; font-weight:700; font-size:11px;
-    letter-spacing:.06em; text-transform:uppercase; color:var(--red-glow);
-    display:flex; align-items:center; gap:6px; white-space:nowrap;
+    flex-shrink:0; font-family:'Inter',sans-serif; font-weight:700; font-size:10px;
+    letter-spacing:.08em; text-transform:uppercase; color:#fff; background:var(--red);
+    display:flex; align-items:center; justify-content:center; min-height:36px; padding:0 14px; border-radius:999px; white-space:nowrap;
   }
   @media(max-width:600px){
-    .novedades-strip{margin:-24px 4vw 0; padding:13px 16px; gap:10px;}
-    .ns-text{font-size:11.5px; text-align:left;}
+    .mobile-menu,.register-nudge{top:63px;}
+    .novedades-strip{width:calc(100% - 8vw); margin:-18px auto 0; padding:12px; gap:11px; border-radius:12px;}
+    .ns-icon{width:34px; height:34px; font-size:14px;}
+    .ns-text{font-size:11.5px;}
+    .ns-cta{width:34px; height:34px; min-height:34px; padding:0; font-size:0;}
+    .ns-cta::after{content:"→"; font-size:15px;}
   }
   .product .p-body{padding:22px 24px 26px; display:flex; flex-direction:column; flex-grow:1;}
   .product .p-index{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-dim);}
