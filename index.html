@@ -1099,6 +1099,22 @@
     .kit-best{top:10px; right:10px;}
   }
 
+  /* Editorial novedades link */
+  .novedades-strip{display:flex; grid-template-columns:none; align-items:center; justify-content:center; gap:9px; width:max-content; max-width:calc(100% - 12vw); margin:-10px auto 12px; padding:11px 0; border:0; border-radius:0; background:none; box-shadow:none; overflow:visible; color:var(--text-dim); transition:color .2s,transform .2s;}
+  .novedades-strip::before,.ns-icon{display:none;}
+  .novedades-strip:hover{transform:translateX(3px); border:0; box-shadow:none; background:none; color:var(--chrome-1);}
+  .ns-text{display:flex; align-items:center; gap:9px; color:inherit; font-size:11px; line-height:1.4; white-space:nowrap;}
+  .ns-text b{display:inline; margin:0; font-family:'Inter',sans-serif; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--red-glow);}
+  .ns-text b::after{content:"·"; margin-left:9px; color:var(--line);}
+  .ns-cta{display:inline; min-height:0; padding:0; border-radius:0; background:none; color:var(--chrome-1); font-size:10px; letter-spacing:.06em;}
+  @media(max-width:600px){
+    .novedades-strip{width:max-content; max-width:92%; margin:-4px auto 8px; padding:10px 0; gap:7px;}
+    .ns-text{font-size:10px; gap:7px; white-space:normal;}
+    .ns-text b::after{margin-left:7px;}
+    .ns-cta{width:auto; height:auto; min-height:0; padding:0; font-size:9px;}
+    .ns-cta::after{content:none;}
+  }
+
   /* Accessibility and interaction polish */
   .skip-link{
     position:fixed; top:10px; left:10px; z-index:1000; transform:translateY(-160%);
@@ -1115,10 +1131,9 @@
     .btn-primary,.btn-ghost{min-height:48px; justify-content:center;}
     .hero-cta{width:100%;}
     .hero-cta > *{width:min(100%,300px);}
-    .hero .tags{grid-template-columns:repeat(2,minmax(0,1fr)); width:min(100%,420px);}
-    .tag{padding:13px 8px; min-height:58px; font-size:9.5px; gap:6px;}
-    .tag:nth-child(3){border-left:0; border-top:1px solid var(--line);}
-    .tag:nth-child(4){border-top:1px solid var(--line);}
+    .hero .tags{grid-template-columns:repeat(2,1fr); width:min(100%,300px); gap:10px; border:0; margin-left:auto; margin-right:auto;}
+    .tag{aspect-ratio:1/1; min-height:0; padding:12px 8px; border:1px solid var(--line)!important; flex-direction:column; font-size:9.5px; gap:8px; line-height:1.35;}
+    .tag-icon{font-size:17px;}
     .wa-float{bottom:max(18px,env(safe-area-inset-bottom)); right:16px;}
   }
 </style>
@@ -1269,9 +1284,8 @@
 </section>
 
 <a href="#catalogo" class="novedades-strip" onclick="setTimeout(function(){switchGender('new');}, 350);">
-  <span class="ns-icon">✨</span>
-  <span class="ns-text"><b>Novedades</b> — 6 fragancias recién agregadas al catálogo</span>
-  <span class="ns-cta">Ver ahora →</span>
+  <span class="ns-text"><b>Nuevo</b><span>6 fragancias recién agregadas</span></span>
+  <span class="ns-cta">Explorar →</span>
 </a>
 
 <section id="kits">
