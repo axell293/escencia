@@ -19,6 +19,37 @@
   })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="images/mascota.webp" fetchpriority="high">
+<link rel="preload" as="image" href="images/logo.webp">
+<meta name="theme-color" content="#f4efe5">
+<link rel="canonical" href="https://escenciaperfumeria.com/">
+<meta name="robots" content="index, follow">
+<meta property="og:url" content="https://escenciaperfumeria.com/">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Escencia Perfumería — 100% Originales">
+<meta name="twitter:description" content="Decants originales de diseñador, árabes y nicho. Envíos en La Paz, BCS.">
+<meta name="twitter:image" content="https://escenciaperfumeria.com/images/logo.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Escencia Perfumería",
+  "description": "Decants originales de fragancias de diseñador, árabes y de nicho. 3ml y 5ml, 100% originales.",
+  "url": "https://escenciaperfumeria.com/",
+  "image": "https://escenciaperfumeria.com/images/logo.webp",
+  "telephone": "+526122006542",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "La Paz",
+    "addressRegion": "BCS",
+    "addressCountry": "MX"
+  },
+  "areaServed": "MX"
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -399,25 +430,38 @@
     transition:background .2s;
   }
   .kit-cta:hover{background:#a8172a;}
+  .kits-carousel-controls{display:none;}
   @media (max-width:860px){
     .kits-grid{grid-template-columns:1fr 1fr; gap:16px;}
   }
   @media (max-width:600px){
-    .kits-grid{grid-template-columns:repeat(3,1fr); gap:8px;}
+    .kits-grid{
+      display:flex; grid-template-columns:unset; overflow-x:auto; scroll-snap-type:x mandatory;
+      scroll-behavior:smooth; -webkit-overflow-scrolling:touch; gap:14px; padding-bottom:2px;
+      scrollbar-width:none;
+    }
+    .kits-grid::-webkit-scrollbar{display:none;}
+    .kit-card{flex:0 0 auto; width:78%; scroll-snap-align:start;}
     .kit-card:hover{transform:none;}
-    .kit-body{padding:9px 8px 10px; gap:5px;}
-    .kit-tag{font-size:8px; letter-spacing:.03em; line-height:1.25;}
-    .kit-body h3{display:none;}
-    .kit-includes{display:none;}
-    .kit-note{display:none;}
+    .kit-body{padding:16px 16px 18px; gap:8px;}
+    .kit-tag{font-size:10.5px; letter-spacing:.06em; line-height:1.3;}
+    .kit-body h3{font-size:17px;}
+    .kit-includes{font-size:12.5px;}
+    .kit-note{font-size:10.5px;}
     .kit-footer{
-      flex-direction:column; align-items:stretch; gap:6px;
-      margin-top:2px; padding-top:8px;
+      margin-top:6px; padding-top:12px;
     }
-    .kit-price{font-size:14px; text-align:left;}
+    .kit-price{font-size:17px;}
     .kit-cta{
-      padding:7px 4px; font-size:9px; letter-spacing:.02em; text-align:center;
+      padding:9px 16px; font-size:11px; letter-spacing:.04em;
     }
+    .kits-carousel-controls{
+      display:flex; align-items:center; justify-content:center; gap:16px; margin-top:18px;
+    }
+    .carousel-arrow.kits-arrow{
+      position:static; translate:none; width:32px; height:32px; flex-shrink:0;
+    }
+    .kits-dots{display:flex; margin:0;}
   }
 
   /* ---------- about ---------- */
@@ -683,7 +727,7 @@
   .ship-cta span{font-size:14px; color:var(--text-dim); max-width:420px;}
 
   /* ---------- customers carousel ---------- */
-  .carousel{position:relative;}
+  .carousel{position:relative; max-width:600px; margin:0 auto;}
   .carousel-track{
     display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
     -webkit-overflow-scrolling:touch; gap:20px; padding-bottom:4px;
@@ -691,7 +735,7 @@
   .carousel-track::-webkit-scrollbar{display:none;}
   .carousel-track{scrollbar-width:none;}
   .carousel-slide{
-    flex:0 0 auto; width:min(420px,72%); aspect-ratio:4/5; scroll-snap-align:center;
+    flex:0 0 auto; width:min(420px,72%); aspect-ratio:4/5; scroll-snap-align:start;
     overflow:hidden; background:var(--card); border:1px solid var(--line);
   }
   .carousel-slide img{width:100%; height:100%; object-fit:cover; display:block;}
@@ -912,13 +956,13 @@
   }
   @media(max-width:600px){
     header{padding:14px 4vw;}
-    .header-actions{gap:8px;}
-    .theme-toggle{display:none;}
+    .header-actions{gap:6px;}
+    .theme-toggle{width:34px; height:34px;}
     .cart-icon-mobile{display:inline-flex;}
     .cart-label{display:none;}
     .cart-btn{padding:9px 12px; gap:6px;}
-    .profile-btn{width:36px; height:36px;}
-    .menu-btn{width:36px; height:36px;}
+    .profile-btn{width:34px; height:34px;}
+    .menu-btn{width:34px; height:34px;}
   }
   @media(max-width:520px){
     .catalog-grid{grid-template-columns:1fr 1fr;}
@@ -955,7 +999,7 @@
 
 <header>
   <div class="logo-mark" onclick="scrollToTop()" onkeydown="if(event.key==='Enter')scrollToTop()" role="button" tabindex="0" aria-label="Ir al inicio">
-    <img class="logo-img" src="" data-logo-src alt="Escencia Perfumería">
+    <img class="logo-img" src="images/logo.webp" alt="Escencia Perfumería" width="34" height="34">
     <span class="lm-full">Escencia Perfumería</span>
     <span class="lm-short">Escencia</span>
   </div>
@@ -992,10 +1036,9 @@
   <a href="#envios" onclick="closeMobileMenu()">Envíos</a>
   <a href="#clientes" onclick="closeMobileMenu()">Clientes</a>
   <a href="#" onclick="closeMobileMenu(); openProfileModal(); return false;">Mi Perfil</a>
-  <a href="#" onclick="toggleTheme(); return false;" id="mobileThemeLink">Modo oscuro</a>
 </div>
 
-<a href="https://wa.me/526122006542" target="_blank" class="wa-float" aria-label="WhatsApp">
+<a href="https://wa.me/526122006542" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.24 0 4.35.87 5.93 2.46a8.23 8.23 0 0 1 2.42 5.85c0 4.56-3.71 8.27-8.28 8.27a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.25-4.38c0-4.56 3.71-8.27 8.27-8.27M8.53 6.85c-.16 0-.43.06-.65.31s-.85.83-.85 2.02.87 2.34.99 2.5c.12.16 1.7 2.6 4.14 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28s-1.44-.71-1.66-.79-.38-.12-.55.12c-.16.24-.63.79-.77.95-.14.16-.28.18-.53.06s-1.04-.38-1.98-1.22c-.73-.65-1.23-1.46-1.37-1.7s-.02-.38.1-.5c.11-.11.24-.28.36-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42s-.55-1.33-.76-1.82c-.2-.48-.4-.42-.55-.42h-.14z"/></svg>
 </a>
 
@@ -1012,7 +1055,7 @@
     <h3 id="pmTitle">¡Pago confirmado!</h3>
     <p id="pmText">Tu pago se procesó correctamente.</p>
     <div class="pm-order" id="pmOrder"></div>
-    <a href="#" class="btn-primary pm-cta" id="pmWhatsapp" target="_blank">Confirmar mi entrega por WhatsApp</a>
+    <a href="#" class="btn-primary pm-cta" id="pmWhatsapp" target="_blank" rel="noopener">Confirmar mi entrega por WhatsApp</a>
     <p class="pm-note">Este último paso es necesario para que coordinemos tu envío o entrega.</p>
   </div>
 </div>
@@ -1076,7 +1119,7 @@
 </div>
 
 <section class="hero">
-  <img class="hero-mascot" src="" alt="Mascota Escencia Perfumería" loading="eager">
+  <img class="hero-mascot" src="images/mascota.webp" alt="Mascota Escencia Perfumería" loading="eager" fetchpriority="high" width="150" height="150">
   <div class="eyebrow">100% Originales · For Him & Her</div>
   <h1>ESCENCIA</h1>
   <p class="sub">Diseñador · Árabes · Nicho. Decants selectos, sin comprar el frasco completo ni resignar calidad.</p>
@@ -1088,7 +1131,7 @@
   </div>
   <div class="hero-cta">
     <a href="#catalogo" class="btn-primary">Ver catálogo</a>
-    <a href="https://wa.me/526122006542" target="_blank" class="btn-ghost">Escribir por WhatsApp</a>
+    <a href="https://wa.me/526122006542" target="_blank" rel="noopener" class="btn-ghost">Escribir por WhatsApp</a>
   </div>
   <div class="scroll-hint">Desliza</div>
 </section>
@@ -1107,46 +1150,57 @@
     </div>
     <p>Combos armados, listos para regalar o darte un gusto.</p>
   </div>
-  <div class="kits-grid">
-    <div class="kit-card">
-      <div class="kit-media"><img src="" data-kit="kit_inicial" alt="Kit Inicial" loading="lazy"></div>
-      <div class="kit-body">
-        <span class="kit-tag">Kit Inicial</span>
-        <h3>Para empezar con todo</h3>
-        <p class="kit-includes">Nitro Red · Sharaf Blend · Art of Universe</p>
-        <p class="kit-note">1 decant de 5ml de cada fragancia</p>
-        <div class="kit-footer">
-          <span class="kit-price mono">$215</span>
-          <a class="kit-cta" href="https://wa.me/526122006542?text=Hola%2C%20me%20interesa%20el%20Kit%20Inicial%20(Nitro%20Red%2C%20Sharaf%20Blend%2C%20Art%20of%20Universe)%20-%20%24215" target="_blank" rel="noopener">Pedir</a>
+  <div class="kits-carousel-wrap">
+    <div class="kits-grid" id="kitsTrack">
+      <div class="kit-card">
+        <div class="kit-media"><img src="" data-kit="kit_inicial" alt="Kit Inicial" loading="lazy"></div>
+        <div class="kit-body">
+          <span class="kit-tag">Kit Inicial</span>
+          <h3>Para empezar con todo</h3>
+          <p class="kit-includes">Nitro Red · Sharaf Blend · Art of Universe</p>
+          <p class="kit-note">1 decant de 5ml de cada fragancia</p>
+          <div class="kit-footer">
+            <span class="kit-price mono">$215</span>
+            <a class="kit-cta" href="https://wa.me/526122006542?text=Hola%2C%20me%20interesa%20el%20Kit%20Inicial%20(Nitro%20Red%2C%20Sharaf%20Blend%2C%20Art%20of%20Universe)%20-%20%24215" target="_blank" rel="noopener">Pedir</a>
+          </div>
+        </div>
+      </div>
+      <div class="kit-card">
+        <div class="kit-media"><img src="" data-kit="kit_energia" alt="Kit Energía Femenina" loading="lazy"></div>
+        <div class="kit-body">
+          <span class="kit-tag">Kit Energía Femenina</span>
+          <h3>Frescura y actitud</h3>
+          <p class="kit-includes">Kos Muse · Ariana Grande Cloud · Fantasy Britney Spears</p>
+          <p class="kit-note">1 decant de 5ml de cada fragancia</p>
+          <div class="kit-footer">
+            <span class="kit-price mono">$240</span>
+            <a class="kit-cta" href="https://wa.me/526122006542?text=Hola%2C%20me%20interesa%20el%20Kit%20Energ%C3%ADa%20Femenina%20(Kos%20Muse%2C%20Ariana%20Grande%2C%20Fantasy%20Britney%20Spears)%20-%20%24240" target="_blank" rel="noopener">Pedir</a>
+          </div>
+        </div>
+      </div>
+      <div class="kit-card">
+        <div class="kit-media"><img src="" data-kit="kit_seductor" alt="Kit Seductor" loading="lazy"></div>
+        <div class="kit-body">
+          <span class="kit-tag">Kit Seductor</span>
+          <h3>Presencia que se nota</h3>
+          <p class="kit-includes">Asad Elixir · Versace Eros · Dolce &amp; Gabbana The One</p>
+          <p class="kit-note">1 decant de 5ml de cada fragancia</p>
+          <div class="kit-footer">
+            <span class="kit-price mono">$275</span>
+            <a class="kit-cta" href="https://wa.me/526122006542?text=Hola%2C%20me%20interesa%20el%20Kit%20Seductor%20(Asad%20Elixir%2C%20Versace%20Eros%2C%20Dolce%20%26%20Gabbana%20The%20One)%20-%20%24275" target="_blank" rel="noopener">Pedir</a>
+          </div>
         </div>
       </div>
     </div>
-    <div class="kit-card">
-      <div class="kit-media"><img src="" data-kit="kit_energia" alt="Kit Energía Femenina" loading="lazy"></div>
-      <div class="kit-body">
-        <span class="kit-tag">Kit Energía Femenina</span>
-        <h3>Frescura y actitud</h3>
-        <p class="kit-includes">Kos Muse · Ariana Grande Cloud · Fantasy Britney Spears</p>
-        <p class="kit-note">1 decant de 5ml de cada fragancia</p>
-        <div class="kit-footer">
-          <span class="kit-price mono">$240</span>
-          <a class="kit-cta" href="https://wa.me/526122006542?text=Hola%2C%20me%20interesa%20el%20Kit%20Energ%C3%ADa%20Femenina%20(Kos%20Muse%2C%20Ariana%20Grande%2C%20Fantasy%20Britney%20Spears)%20-%20%24240" target="_blank" rel="noopener">Pedir</a>
-        </div>
-      </div>
-    </div>
-    <div class="kit-card">
-      <div class="kit-media"><img src="" data-kit="kit_seductor" alt="Kit Seductor" loading="lazy"></div>
-      <div class="kit-body">
-        <span class="kit-tag">Kit Seductor</span>
-        <h3>Presencia que se nota</h3>
-        <p class="kit-includes">Asad Elixir · Versace Eros · Dolce &amp; Gabbana The One</p>
-        <p class="kit-note">1 decant de 5ml de cada fragancia</p>
-        <div class="kit-footer">
-          <span class="kit-price mono">$275</span>
-          <a class="kit-cta" href="https://wa.me/526122006542?text=Hola%2C%20me%20interesa%20el%20Kit%20Seductor%20(Asad%20Elixir%2C%20Versace%20Eros%2C%20Dolce%20%26%20Gabbana%20The%20One)%20-%20%24275" target="_blank" rel="noopener">Pedir</a>
-        </div>
-      </div>
-    </div>
+  </div>
+  <div class="kits-carousel-controls">
+    <button class="carousel-arrow kits-arrow prev" onclick="kitsCarouselMove(-1)" aria-label="Kit anterior">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="carousel-dots kits-dots" id="kitsDots"></div>
+    <button class="carousel-arrow kits-arrow next" onclick="kitsCarouselMove(1)" aria-label="Siguiente kit">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
   </div>
 </section>
 
@@ -1220,7 +1274,7 @@
     <span class="nr-icon">🔍</span>
     <p>No encontramos ningún perfume con ese nombre en este filtro.</p>
     <span class="nr-note">Puede que lo tengamos en otro tamaño, en la línea de frasco completo, o que sea una fragancia nueva — pregúntanos directo y te confirmamos.</span>
-    <a href="#" id="noResultsWa" target="_blank" class="btn-ghost nr-cta">Preguntar por WhatsApp →</a>
+    <a href="#" id="noResultsWa" target="_blank" rel="noopener" class="btn-ghost nr-cta">Preguntar por WhatsApp →</a>
   </div>
 
   <div class="full-bottle-teaser">
@@ -1230,7 +1284,7 @@
     </div>
     <p class="fbt-lead">📦 Bajo pedido — entrega en 3 a 5 días hábiles una vez confirmado tu pedido.</p>
     <div class="fbt-grid" id="fbtGrid"></div>
-    <a href="https://wa.me/526122006542?text=Hola%2C%20quiero%20info%20de%20fragancias%20de%20frasco%20completo" target="_blank" class="btn-ghost fbt-cta">Preguntar por WhatsApp →</a>
+    <a href="https://wa.me/526122006542?text=Hola%2C%20quiero%20info%20de%20fragancias%20de%20frasco%20completo" target="_blank" rel="noopener" class="btn-ghost fbt-cta">Preguntar por WhatsApp →</a>
   </div>
 </section>
 
@@ -1303,7 +1357,7 @@
 
   <div class="ship-cta">
     <span>¿Estás fuera de La Paz? Escríbenos tu código postal y te armamos la cotización.</span>
-    <a href="https://wa.me/526122006542?text=Hola%2C%20quiero%20cotizar%20un%20env%C3%ADo%20a%20mi%20ciudad.%20Mi%20c%C3%B3digo%20postal%20es%3A%20" target="_blank" class="btn-primary">Cotizar mi envío</a>
+    <a href="https://wa.me/526122006542?text=Hola%2C%20quiero%20cotizar%20un%20env%C3%ADo%20a%20mi%20ciudad.%20Mi%20c%C3%B3digo%20postal%20es%3A%20" target="_blank" rel="noopener" class="btn-primary">Cotizar mi envío</a>
   </div>
 </section>
 
@@ -1335,7 +1389,7 @@
   </div>
   <div class="carousel-dots" id="carouselDots"></div>
 
-  <a href="https://www.instagram.com/escencia_perfumeria_?igsh=ejN4a2t3a21maXQ2&utm_source=qr" target="_blank" class="btn-ghost customers-cta">Más testimonios en Instagram →</a>
+  <a href="https://www.instagram.com/escencia_perfumeria_?igsh=ejN4a2t3a21maXQ2&utm_source=qr" target="_blank" rel="noopener" class="btn-ghost customers-cta">Más testimonios en Instagram →</a>
 </section>
 
 <footer>
@@ -1345,8 +1399,8 @@
       <div class="f-logo">✦ escencia perfumería ✦</div>
       <div class="f-note">Hecho a pedido en La Paz, BCS — 100% originales.</div>
       <div class="social-row">
-        <a href="https://www.instagram.com/escencia_perfumeria_?igsh=ejN4a2t3a21maXQ2&utm_source=qr" target="_blank" title="Instagram">IG</a>
-        <a href="https://www.facebook.com/share/17Wu6zZtJ3/?mibextid=wwXIfr" target="_blank" title="Facebook">FB</a>
+        <a href="https://www.instagram.com/escencia_perfumeria_?igsh=ejN4a2t3a21maXQ2&utm_source=qr" target="_blank" rel="noopener" title="Instagram">IG</a>
+        <a href="https://www.facebook.com/share/17Wu6zZtJ3/?mibextid=wwXIfr" target="_blank" rel="noopener" title="Facebook">FB</a>
       </div>
     </div>
     <div class="footer-loc">
@@ -1387,7 +1441,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
         Pagar con tarjeta
       </button>
-      <a href="#" class="method-btn whatsapp" id="waCheckout" target="_blank">Cerrar pedido por WhatsApp</a>
+      <a href="#" class="method-btn whatsapp" id="waCheckout" target="_blank" rel="noopener">Cerrar pedido por WhatsApp</a>
       <button class="method-btn transfer" onclick="toggleTransfer()">Ver datos de transferencia</button>
     </div>
     <p class="card-error" id="cardError" style="display:none;"></p>
@@ -1849,9 +1903,6 @@ window.__ESCENCIA_IMAGES__ = {
     toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
   }
 
-  document.querySelector('.logo-img').src = IMG.logo;
-  const heroMascotEl = document.querySelector('.hero-mascot');
-  if(heroMascotEl) heroMascotEl.src = IMG.mascota;
   document.querySelectorAll('[data-kit]').forEach(function(el){
     const key = el.getAttribute('data-kit');
     if(IMG[key]) el.src = IMG[key];
@@ -1963,7 +2014,7 @@ window.__ESCENCIA_IMAGES__ = {
            <div class="fbt-price mono">$${b.price}</div>
            <button class="add-btn ${isAdded ? 'added' : ''}" onclick="addToCart('${b.n.replace(/'/g,"\\'")}', ${b.price}, 'Frasco completo', this, '${b.img || ''}')">${isAdded ? '✓' : '+'}</button>
          </div>`
-      : `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar el ' + b.full + ' en frasco completo')}" target="_blank" class="fbt-quote-btn">Cotizar por WhatsApp</a>`;
+      : `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar el ' + b.full + ' en frasco completo')}" target="_blank" rel="noopener" class="fbt-quote-btn">Cotizar por WhatsApp</a>`;
     return `
     <div class="fbt-item">
       <div class="fbt-media">
@@ -1981,40 +2032,57 @@ window.__ESCENCIA_IMAGES__ = {
   updateCartUI();
   if(profile) renderProfile();
 
-  // --- Carrusel de clientes ---
-  (function initCarousel(){
-    const track = document.getElementById('carouselTrack');
-    const dotsWrap = document.getElementById('carouselDots');
+  // --- Carrusel genérico (clientes / kits) ---
+  function initCarousel(opts){
+    const track = document.getElementById(opts.trackId);
+    const dotsWrap = document.getElementById(opts.dotsId);
     if(!track || !dotsWrap) return;
 
-    const slides = Array.from(track.children);
+    let slides = Array.from(track.children);
     let current = 0;
     let autoplayTimer = null;
 
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', `Ir a la foto ${i + 1}`);
-      dot.onclick = () => goToSlide(i);
-      dotsWrap.appendChild(dot);
-    });
-    const dots = Array.from(dotsWrap.children);
+    function buildDots(){
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `${opts.dotLabel} ${i + 1}`);
+        dot.onclick = () => { goToSlide(i); if(opts.autoplay) restartAutoplay(); };
+        dotsWrap.appendChild(dot);
+      });
+    }
+    buildDots();
+    let dots = Array.from(dotsWrap.children);
 
     function updateDots(i){
       dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
     }
 
+    function closestSlideIndex(){
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if(track.scrollLeft >= maxScroll - 1) return slides.length - 1;
+      if(track.scrollLeft <= 1) return 0;
+      let closest = 0, closestDist = Infinity;
+      slides.forEach((s, i) => {
+        const dist = Math.abs(s.offsetLeft - track.scrollLeft);
+        if(dist < closestDist){ closestDist = dist; closest = i; }
+      });
+      return closest;
+    }
+
     function goToSlide(i){
       current = (i + slides.length) % slides.length;
       const slide = slides[current];
-      const targetLeft = slide.offsetLeft - (track.clientWidth - slide.clientWidth) / 2;
-      track.scrollTo({left: targetLeft, behavior:'smooth'});
+      track.scrollTo({left: slide.offsetLeft, behavior:'smooth'});
       updateDots(current);
     }
 
-    window.carouselMove = function(dir){
+    window[opts.moveFn] = function(dir){
+      // En pantallas donde el track no se desplaza (ej. grid de escritorio), no hacer nada.
+      if(track.scrollWidth <= track.clientWidth + 2) return;
       goToSlide(current + dir);
-      restartAutoplay();
+      if(opts.autoplay) restartAutoplay();
     };
 
     // Sincroniza los puntos si el usuario desliza manualmente
@@ -2022,27 +2090,44 @@ window.__ESCENCIA_IMAGES__ = {
     track.addEventListener('scroll', () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
-        const trackCenter = track.scrollLeft + track.clientWidth / 2;
-        let closest = 0, closestDist = Infinity;
-        slides.forEach((s, i) => {
-          const dist = Math.abs((s.offsetLeft + s.clientWidth / 2) - trackCenter);
-          if(dist < closestDist){ closestDist = dist; closest = i; }
-        });
-        current = closest;
+        current = closestSlideIndex();
         updateDots(current);
       }, 120);
     });
 
     function restartAutoplay(){
       clearInterval(autoplayTimer);
-      autoplayTimer = setInterval(() => goToSlide(current + 1), 5000);
+      autoplayTimer = setInterval(() => {
+        if(track.scrollWidth <= track.clientWidth + 2) return;
+        goToSlide(current + 1);
+      }, 5000);
     }
-    track.addEventListener('mouseenter', () => clearInterval(autoplayTimer));
-    track.addEventListener('mouseleave', restartAutoplay);
-    track.addEventListener('touchstart', () => clearInterval(autoplayTimer), {passive:true});
 
-    restartAutoplay();
-  })();
+    if(opts.autoplay){
+      track.addEventListener('mouseenter', () => clearInterval(autoplayTimer));
+      track.addEventListener('mouseleave', restartAutoplay);
+      track.addEventListener('touchstart', () => clearInterval(autoplayTimer), {passive:true});
+      restartAutoplay();
+    }
+
+    // Reajusta la posición al cambiar de tamaño de pantalla (ej. rotar el celular)
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        if(track.scrollWidth <= track.clientWidth + 2){ current = 0; updateDots(0); return; }
+        current = closestSlideIndex();
+        const slide = slides[current];
+        if(slide){
+          track.scrollTo({left: slide.offsetLeft, behavior:'auto'});
+        }
+        updateDots(current);
+      }, 150);
+    });
+  }
+
+  initCarousel({trackId:'carouselTrack', dotsId:'carouselDots', moveFn:'carouselMove', dotLabel:'Ir a la foto', autoplay:false});
+  initCarousel({trackId:'kitsTrack', dotsId:'kitsDots', moveFn:'kitsCarouselMove', dotLabel:'Ir al kit', autoplay:false});
 </script>
 
 </body>
