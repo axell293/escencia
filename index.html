@@ -333,15 +333,19 @@
     position:relative; z-index:2;
   }
   .hero .tags{
-    margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+    margin-top:24px; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0;
+    width:min(100%,960px); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
     position:relative; z-index:2;
   }
   .tag{
-    font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--chrome-1);
-    border:1px solid var(--line); padding:7px 14px; font-weight:600;
+    font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--chrome-1);
+    padding:15px 12px; font-weight:700; line-height:1.35;
+    display:flex; align-items:center; justify-content:center; gap:9px; min-height:58px; text-align:center;
   }
+  .tag + .tag{border-left:1px solid var(--line);}
+  .tag-icon{color:var(--red-glow); font-size:15px; line-height:1; flex-shrink:0;}
   .hero-cta{
-    margin-top:30px; display:flex; gap:16px; position:relative; z-index:2; flex-wrap:wrap; justify-content:center;
+    margin-top:32px; display:flex; position:relative; z-index:2; justify-content:center; width:100%;
   }
   .btn-primary, .btn-ghost{
     font-family:'Inter',sans-serif; font-weight:700; font-size:13px; letter-spacing:.06em; text-transform:uppercase;
@@ -353,6 +357,10 @@
     color:#fff; box-shadow:0 8px 30px -8px rgba(200,30,44,.6);
   }
   .btn-primary:hover{box-shadow:0 8px 40px -6px rgba(200,30,44,.85); transform:translateY(-1px);}
+  .hero-cta .btn-primary{
+    min-width:210px; justify-content:center; padding:17px 38px;
+    box-shadow:0 10px 34px -8px rgba(200,30,44,.72);
+  }
   .btn-ghost{
     background:transparent; border:1px solid var(--chrome-3); color:var(--chrome-1);
   }
@@ -558,14 +566,14 @@
   }
   .size-tab.active{border-color:var(--red); color:#fff; background:rgba(200,30,44,.12);}
 
-  .gender-tabs{display:flex; align-items:center; gap:0; margin-bottom:44px; flex-wrap:wrap; row-gap:10px;}
+  .gender-tabs{display:flex; align-items:center; gap:24px; margin-bottom:44px; flex-wrap:wrap; row-gap:10px;}
   .gender-tab{
     font-family:'Inter',sans-serif; font-size:12px; font-weight:600; letter-spacing:.04em;
     padding:4px 0; border:none; background:transparent; color:var(--text-dim);
     cursor:pointer; transition:color .2s; border-bottom:1px solid transparent;
   }
   .gender-tab:not(:last-child)::after{
-    content:"·"; margin:0 16px; color:var(--line);
+    display:none;
   }
   .gender-tab.active{color:var(--chrome-1); border-bottom-color:var(--red-glow);}
 
@@ -727,17 +735,19 @@
   .ship-cta span{font-size:14px; color:var(--text-dim); max-width:420px;}
 
   /* ---------- customers carousel ---------- */
-  .carousel{position:relative; max-width:600px; margin:0 auto;}
+  .carousel{position:relative; width:min(100%,1120px); margin:0 auto; padding:0 54px;}
   .carousel-track{
     display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
-    -webkit-overflow-scrolling:touch; gap:20px; padding-bottom:4px;
+    -webkit-overflow-scrolling:touch; gap:20px; padding:4px;
   }
   .carousel-track::-webkit-scrollbar{display:none;}
   .carousel-track{scrollbar-width:none;}
   .carousel-slide{
-    flex:0 0 auto; width:min(420px,72%); aspect-ratio:4/5; scroll-snap-align:start;
+    flex:0 0 calc((100% - 40px)/3); width:auto; aspect-ratio:4/5; scroll-snap-align:start;
     overflow:hidden; background:var(--card); border:1px solid var(--line);
+    box-shadow:0 16px 38px -28px rgba(0,0,0,.55); transition:transform .25s,border-color .25s;
   }
+  .carousel-slide:hover{transform:translateY(-3px); border-color:var(--chrome-3);}
   .carousel-slide img{width:100%; height:100%; object-fit:cover; display:block;}
   .carousel-arrow{
     position:absolute; top:50%; translate:0 -50%; z-index:2;
@@ -746,18 +756,26 @@
     display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .2s;
   }
   .carousel-arrow:hover{border-color:var(--red-glow); color:#fff; background:rgba(200,30,44,.25);}
-  .carousel-arrow.prev{left:-6px;}
-  .carousel-arrow.next{right:-6px;}
+  .carousel-arrow.prev{left:2px;}
+  .carousel-arrow.next{right:2px;}
   .carousel-dots{display:flex; justify-content:center; gap:9px; margin:22px 0 28px;}
   .carousel-dot{
     width:6px; height:6px; border-radius:50%; border:1px solid var(--chrome-3); background:transparent;
     padding:0; cursor:pointer; transition:all .25s;
   }
   .carousel-dot.active{background:var(--red-glow); border-color:var(--red-glow); width:16px; border-radius:3px;}
-  .customers-cta{display:inline-flex;}
+  .customers-cta{display:flex; width:max-content; margin:0 auto;}
+
+  @media(max-width:980px){
+    .carousel{width:min(100%,760px);}
+    .carousel-slide{flex-basis:calc((100% - 20px)/2);}
+  }
 
   @media(max-width:600px){
-    .carousel-slide{width:82%;}
+    .carousel{padding:0; width:100%;}
+    .carousel-track{padding:3px 0; gap:14px;}
+    .carousel-slide{flex-basis:82%; width:82%; box-shadow:none;}
+    .carousel-slide:hover{transform:none;}
     .carousel-arrow{width:32px; height:32px;}
     .carousel-arrow.prev{left:4px;}
     .carousel-arrow.next{right:4px;}
@@ -990,10 +1008,114 @@
 
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important; transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* Final visual system polish */
+  @media(min-width:701px){
+    .hero{min-height:88svh; padding-top:112px; padding-bottom:72px;}
+  }
+
+  #kits,#catalogo,#clientes{position:relative;}
+  #kits,#clientes{
+    background:linear-gradient(180deg,transparent,rgba(143,106,46,.045) 45%,transparent);
+    border-top:1px solid color-mix(in srgb,var(--line) 65%,transparent);
+    border-bottom:1px solid color-mix(in srgb,var(--line) 65%,transparent);
+  }
+  #catalogo{max-width:1500px; margin-inline:auto;}
+
+  .kit-card{position:relative;}
+  .kit-featured{border-color:var(--red); box-shadow:0 22px 50px -38px rgba(200,30,44,.9);}
+  .kit-best{
+    position:absolute; top:14px; right:14px; z-index:3; padding:7px 11px;
+    background:var(--red); color:#fff; font-size:9px; font-weight:800;
+    letter-spacing:.11em; text-transform:uppercase; box-shadow:0 8px 20px rgba(0,0,0,.22);
+  }
+
+  .catalog-filterbar{
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+    margin:0 0 32px; padding:12px 14px; border:1px solid var(--line);
+    background:color-mix(in srgb,var(--card) 92%,transparent); backdrop-filter:blur(14px);
+  }
+  .catalog-filterbar .size-tabs,.catalog-filterbar .gender-tabs{margin:0;}
+  .catalog-filterbar .gender-tabs{flex-wrap:nowrap; gap:24px;}
+  @media(min-width:861px){
+    .catalog-filterbar{position:sticky; top:82px; z-index:20; box-shadow:0 14px 30px -30px rgba(0,0,0,.8);}
+  }
+
+  .catalog-grid{gap:18px; border:0; background:transparent;}
+  .product{
+    border:1px solid var(--line); min-height:100%; overflow:hidden;
+    box-shadow:0 18px 42px -38px rgba(0,0,0,.7);
+    transition:transform .25s,background .25s,border-color .25s,box-shadow .25s;
+  }
+  .product:hover{
+    transform:translateY(-4px); border-color:var(--chrome-3);
+    box-shadow:0 24px 48px -34px rgba(0,0,0,.75);
+  }
+  .product .p-body{padding:20px 22px 22px;}
+  .product h3{font-size:22px; min-height:2.5em; display:flex; align-items:flex-start;}
+  .product .desc{font-size:13px;}
+  .product .p-footer{padding-top:16px; border-top:1px solid var(--line);}
+  .add-btn{border-radius:50%;}
+  @media(min-width:1280px){.catalog-grid{grid-template-columns:repeat(4,1fr);}}
+
+  .drawer-foot{
+    background:var(--charcoal); box-shadow:0 -18px 35px -28px rgba(0,0,0,.8);
+    padding-bottom:max(26px,env(safe-area-inset-bottom));
+  }
+  .drawer-foot .total-row{align-items:flex-end;}
+  .drawer-foot .total-row .t-amount{font-size:26px;}
+  .method-btn.card{box-shadow:0 10px 28px -14px rgba(200,30,44,.65);}
+
+  footer{background:color-mix(in srgb,var(--charcoal) 62%,transparent);}
+  .footer-grid{max-width:1280px; margin:0 auto; grid-template-columns:.9fr 1fr 1.15fr; align-items:center;}
+  .footer-map{min-height:180px;}
+  .footer-map iframe{min-height:180px;}
+
+  .reveal-block{opacity:0; transform:translateY(20px); transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal-block.is-visible{opacity:1; transform:none;}
+
+  @media(max-width:860px){
+    .catalog-filterbar{display:block; padding:14px;}
+    .catalog-filterbar .size-tabs{margin-bottom:14px;}
+    .catalog-filterbar .gender-tabs{overflow-x:auto; flex-wrap:nowrap; padding-bottom:4px;}
+    .catalog-filterbar .gender-tab{flex:0 0 auto;}
+  }
+  @media(max-width:600px){
+    .catalog-grid{gap:12px;}
+    .product:hover{transform:none;}
+    .product h3{min-height:0;}
+    .kit-best{top:10px; right:10px;}
+  }
+
+  /* Accessibility and interaction polish */
+  .skip-link{
+    position:fixed; top:10px; left:10px; z-index:1000; transform:translateY(-160%);
+    padding:11px 16px; background:var(--red); color:#fff; text-decoration:none;
+    font-size:13px; font-weight:700; box-shadow:0 8px 24px rgba(0,0,0,.25);
+  }
+  .skip-link:focus{transform:translateY(0);}
+  :where(a,button,input):focus-visible{outline:3px solid var(--red-glow); outline-offset:3px;}
+  section[id]{scroll-margin-top:92px;}
+  body.ui-locked{overflow:hidden;}
+  .drawer,.payment-modal,.profile-modal{overscroll-behavior:contain;}
+  .cart-btn[aria-expanded="true"],.menu-btn[aria-expanded="true"]{border-color:var(--red);}
+  @media (max-width:600px){
+    .btn-primary,.btn-ghost{min-height:48px; justify-content:center;}
+    .hero-cta{width:100%;}
+    .hero-cta > *{width:min(100%,300px);}
+    .hero .tags{grid-template-columns:repeat(2,minmax(0,1fr)); width:min(100%,420px);}
+    .tag{padding:13px 8px; min-height:58px; font-size:9.5px; gap:6px;}
+    .tag:nth-child(3){border-left:0; border-top:1px solid var(--line);}
+    .tag:nth-child(4){border-top:1px solid var(--line);}
+    .wa-float{bottom:max(18px,env(safe-area-inset-bottom)); right:16px;}
   }
 </style>
 </head>
 <body>
+
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
 
 <div class="grain"></div>
 
@@ -1003,7 +1125,7 @@
     <span class="lm-full">Escencia Perfumería</span>
     <span class="lm-short">Escencia</span>
   </div>
-  <nav class="links">
+  <nav class="links" aria-label="Navegación principal">
     <a href="#catalogo">Catálogo</a>
     <a href="#kits" class="nav-kits">Kits <span class="nav-kits-dot"></span></a>
     <a href="#como-funciona">Cómo comprar</a>
@@ -1019,17 +1141,17 @@
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       <span class="profile-dot" id="profileDot"></span>
     </button>
-    <button class="cart-btn" onclick="openCart()">
+    <button class="cart-btn" onclick="openCart()" aria-label="Abrir carrito" aria-controls="drawer" aria-expanded="false">
       <svg class="cart-icon-mobile" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
       <span class="cart-label">Carrito</span> <span class="cart-count mono" id="cartCount">0</span>
     </button>
-    <button class="menu-btn" onclick="toggleMobileMenu()" aria-label="Menú">
+    <button class="menu-btn" onclick="toggleMobileMenu()" aria-label="Menú" aria-controls="mobileMenu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
 
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <a href="#catalogo" onclick="closeMobileMenu()">Catálogo</a>
   <a href="#kits" onclick="closeMobileMenu()" class="nav-kits">Kits <span class="nav-kits-dot"></span></a>
   <a href="#como-funciona" onclick="closeMobileMenu()">Cómo comprar</a>
@@ -1048,8 +1170,8 @@
   <button class="rn-cta" onclick="goToProfile()">Crear mi perfil</button>
 </div>
 
-<div class="payment-overlay" id="paymentOverlay">
-  <div class="payment-modal">
+<div class="payment-overlay" id="paymentOverlay" aria-hidden="true">
+  <div class="payment-modal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
     <button class="pm-close" onclick="closePaymentModal()" aria-label="Cerrar">&times;</button>
     <div class="pm-icon" id="pmIcon">✅</div>
     <h3 id="pmTitle">¡Pago confirmado!</h3>
@@ -1060,10 +1182,10 @@
   </div>
 </div>
 
-<div class="profile-overlay" id="profileOverlay">
-  <div class="profile-modal">
+<div class="profile-overlay" id="profileOverlay" aria-hidden="true">
+  <div class="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
     <button class="pm-close" onclick="closeProfileModal()" aria-label="Cerrar">&times;</button>
-    <h3>Mi perfil</h3>
+    <h3 id="profileTitle">Mi perfil</h3>
 
     <form id="profileForm" class="profile-form" onsubmit="saveProfile(event)">
       <p class="dp-label">Tus datos de entrega</p>
@@ -1118,20 +1240,20 @@
   </div>
 </div>
 
-<section class="hero">
+<main id="contenido">
+<section class="hero" aria-labelledby="heroTitle">
   <img class="hero-mascot" src="images/mascota.webp" alt="Mascota Escencia Perfumería" loading="eager" fetchpriority="high" width="150" height="150">
   <div class="eyebrow">100% Originales · For Him & Her</div>
-  <h1>ESCENCIA</h1>
+  <h1 id="heroTitle">ESCENCIA</h1>
   <p class="sub">Diseñador · Árabes · Nicho. Decants selectos, sin comprar el frasco completo ni resignar calidad.</p>
   <div class="tags">
-    <span class="tag">Decants 3ml / 5ml</span>
-    <span class="tag">Entrega local en La Paz, BCS</span>
-    <span class="tag">Envíos a toda la República</span>
-    <span class="tag">Verificados</span>
+    <span class="tag"><span class="tag-icon" aria-hidden="true">◇</span>Decants 3 y 5 ml</span>
+    <span class="tag"><span class="tag-icon" aria-hidden="true">⌖</span>Entrega en La Paz</span>
+    <span class="tag"><span class="tag-icon" aria-hidden="true">→</span>Envíos nacionales</span>
+    <span class="tag"><span class="tag-icon" aria-hidden="true">✓</span>100% originales</span>
   </div>
   <div class="hero-cta">
     <a href="#catalogo" class="btn-primary">Ver catálogo</a>
-    <a href="https://wa.me/526122006542" target="_blank" rel="noopener" class="btn-ghost">Escribir por WhatsApp</a>
   </div>
   <div class="scroll-hint">Desliza</div>
 </section>
@@ -1178,9 +1300,10 @@
           </div>
         </div>
       </div>
-      <div class="kit-card">
+      <div class="kit-card kit-featured">
         <div class="kit-media"><img src="" data-kit="kit_seductor" alt="Kit Seductor" loading="lazy"></div>
         <div class="kit-body">
+          <span class="kit-best">Más vendido</span>
           <span class="kit-tag">Kit Seductor</span>
           <h3>Presencia que se nota</h3>
           <p class="kit-includes">Asad Elixir · Versace Eros · Dolce &amp; Gabbana The One</p>
@@ -1249,16 +1372,18 @@
     <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display:none;" aria-label="Limpiar búsqueda">&times;</button>
   </div>
 
-  <div class="size-tabs">
-    <button class="size-tab active" data-size="5ml" onclick="switchSize('5ml')">Decant 5 ml</button>
-    <button class="size-tab" data-size="3ml" onclick="switchSize('3ml')">Decant 3 ml</button>
-  </div>
+  <div class="catalog-filterbar" aria-label="Filtros del catálogo">
+    <div class="size-tabs">
+      <button class="size-tab active" data-size="5ml" onclick="switchSize('5ml')">Decant 5 ml</button>
+      <button class="size-tab" data-size="3ml" onclick="switchSize('3ml')">Decant 3 ml</button>
+    </div>
 
-  <div class="gender-tabs">
-    <button class="gender-tab" data-gender="new" onclick="switchGender('new')">✨ Novedades</button>
-    <button class="gender-tab active" data-gender="him" onclick="switchGender('him')">Para Él</button>
-    <button class="gender-tab" data-gender="unisex" onclick="switchGender('unisex')">Unisex</button>
-    <button class="gender-tab" data-gender="her" onclick="switchGender('her')">Para Ella</button>
+    <div class="gender-tabs">
+      <button class="gender-tab" data-gender="new" onclick="switchGender('new')">✨ Novedades</button>
+      <button class="gender-tab active" data-gender="him" onclick="switchGender('him')">Para Él</button>
+      <button class="gender-tab" data-gender="unisex" onclick="switchGender('unisex')">Unisex</button>
+      <button class="gender-tab" data-gender="her" onclick="switchGender('her')">Para Ella</button>
+    </div>
   </div>
 
   <p class="results-count" id="resultsCount"></p>
@@ -1392,6 +1517,8 @@
   <a href="https://www.instagram.com/escencia_perfumeria_?igsh=ejN4a2t3a21maXQ2&utm_source=qr" target="_blank" rel="noopener" class="btn-ghost customers-cta">Más testimonios en Instagram →</a>
 </section>
 
+</main>
+
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -1418,17 +1545,17 @@
       </div>
     </div>
     <div class="footer-map">
-      <iframe src="https://www.google.com/maps?q=La+Paz,+Baja+California+Sur,+Mexico&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe title="Ubicación de Escencia Perfumería en La Paz, BCS" src="https://www.google.com/maps?q=La+Paz,+Baja+California+Sur,+Mexico&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
 </footer>
 
 <!-- cart drawer -->
-<div class="overlay" id="overlay" onclick="closeCart()"></div>
-<div class="drawer" id="drawer">
+<div class="overlay" id="overlay" onclick="closeCart()" aria-hidden="true"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
   <div class="drawer-head">
-    <h3>Tu carrito</h3>
-    <button onclick="closeCart()">&times;</button>
+    <h3 id="drawerTitle">Tu carrito</h3>
+    <button onclick="closeCart()" aria-label="Cerrar carrito">&times;</button>
   </div>
   <div class="drawer-items" id="drawerItems"></div>
   <div class="drawer-foot">
@@ -1879,19 +2006,44 @@ window.__ESCENCIA_IMAGES__ = {
   }
 
   function toggleMobileMenu(){
-    document.getElementById('mobileMenu').classList.toggle('open');
+    const menu = document.getElementById('mobileMenu');
+    const button = document.querySelector('.menu-btn');
+    const isOpen = menu.classList.toggle('open');
+    menu.setAttribute('aria-hidden', String(!isOpen));
+    button.setAttribute('aria-expanded', String(isOpen));
   }
   function closeMobileMenu(){
     document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('mobileMenu').setAttribute('aria-hidden', 'true');
+    document.querySelector('.menu-btn').setAttribute('aria-expanded', 'false');
+  }
+
+  let lastFocusedElement = null;
+  function syncPageLock(){
+    const hasOpenLayer = document.querySelector('.drawer.open, .payment-overlay.show, .profile-overlay.show');
+    document.body.classList.toggle('ui-locked', !!hasOpenLayer);
   }
 
   function openCart(){
-    document.getElementById('drawer').classList.add('open');
-    document.getElementById('overlay').classList.add('open');
+    lastFocusedElement = document.activeElement;
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.querySelector('.cart-btn').setAttribute('aria-expanded', 'true');
+    syncPageLock();
+    drawer.querySelector('.drawer-head button').focus();
   }
   function closeCart(){
     document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer').setAttribute('aria-hidden', 'true');
     document.getElementById('overlay').classList.remove('open');
+    document.getElementById('overlay').setAttribute('aria-hidden', 'true');
+    document.querySelector('.cart-btn').setAttribute('aria-expanded', 'false');
+    syncPageLock();
+    if(lastFocusedElement) lastFocusedElement.focus();
   }
 
   let toastTimer;
@@ -1933,10 +2085,19 @@ window.__ESCENCIA_IMAGES__ = {
   }
 
   function openProfileModal(){
-    document.getElementById('profileOverlay').classList.add('show');
+    lastFocusedElement = document.activeElement;
+    const overlay = document.getElementById('profileOverlay');
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden', 'false');
+    syncPageLock();
+    setTimeout(() => overlay.querySelector('input:not([type="hidden"]), button').focus(), 0);
   }
   function closeProfileModal(){
-    document.getElementById('profileOverlay').classList.remove('show');
+    const overlay = document.getElementById('profileOverlay');
+    overlay.classList.remove('show');
+    overlay.setAttribute('aria-hidden', 'true');
+    syncPageLock();
+    if(lastFocusedElement) lastFocusedElement.focus();
   }
   if(!profile){
     setTimeout(() => {
@@ -1945,7 +2106,10 @@ window.__ESCENCIA_IMAGES__ = {
   }
 
   function closePaymentModal(){
-    document.getElementById('paymentOverlay').classList.remove('show');
+    const overlay = document.getElementById('paymentOverlay');
+    overlay.classList.remove('show');
+    overlay.setAttribute('aria-hidden', 'true');
+    syncPageLock();
   }
 
   (function checkPaymentReturn(){
@@ -1996,6 +2160,8 @@ window.__ESCENCIA_IMAGES__ = {
     }
 
     document.getElementById('paymentOverlay').classList.add('show');
+    document.getElementById('paymentOverlay').setAttribute('aria-hidden', 'false');
+    syncPageLock();
 
     // Limpia la URL para que no se repita el aviso si recargan la página
     window.history.replaceState({}, document.title, window.location.pathname);
@@ -2128,6 +2294,31 @@ window.__ESCENCIA_IMAGES__ = {
 
   initCarousel({trackId:'carouselTrack', dotsId:'carouselDots', moveFn:'carouselMove', dotLabel:'Ir a la foto', autoplay:false});
   initCarousel({trackId:'kitsTrack', dotsId:'kitsDots', moveFn:'kitsCarouselMove', dotLabel:'Ir al kit', autoplay:false});
+
+  (function initScrollReveal(){
+    const blocks = document.querySelectorAll('main > section:not(.hero), .novedades-strip');
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)){
+      blocks.forEach(block => block.classList.add('is-visible'));
+      return;
+    }
+    blocks.forEach(block => block.classList.add('reveal-block'));
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, {threshold:.08, rootMargin:'0px 0px -40px'});
+    blocks.forEach(block => observer.observe(block));
+  })();
+
+  document.addEventListener('keydown', function(event){
+    if(event.key !== 'Escape') return;
+    if(document.getElementById('profileOverlay').classList.contains('show')) closeProfileModal();
+    else if(document.getElementById('paymentOverlay').classList.contains('show')) closePaymentModal();
+    else if(document.getElementById('drawer').classList.contains('open')) closeCart();
+    else closeMobileMenu();
+  });
 </script>
 
 </body>
