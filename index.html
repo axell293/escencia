@@ -1640,6 +1640,48 @@
     .hero-single .hero-kicker{font-size:18px;margin-top:2px;}.hero-single .sub{max-width:335px;font-size:11px;line-height:1.5}.hero-single .hero-cta{flex-direction:column;gap:5px;margin-top:17px}.hero-single .hero-cta .btn-primary{min-width:205px}.hero-single .hero-text-link{font-size:7px}.hero-single .tags{margin-top:16px}.hero-single .tag{padding:0 9px;font-size:6.5px!important;min-height:0!important}.hero:hover .hero-single h1 span,.hero:hover .hero-single h1 em{transform:none}.hero:hover .hero-wordmark{transform:none;letter-spacing:-.075em;}
   }
   @media(max-width:370px),(max-height:700px){.brand-figure{width:170px;height:165px}.brand-slab{height:140px;width:65px}.brand-figure .hero-mascot{width:125px!important;max-height:155px}.hero-single h1{font-size:46px}.hero-single .hero-kicker{font-size:16px}.hero-single .sub{display:none}.hero-single .tags{margin-top:11px}}
+
+  /* Catálogo fotográfico — una misma firma visual en claro y oscuro */
+  .product .p-media{
+    isolation:isolate;
+    background:linear-gradient(145deg,#e9dfcf,#f7f2e8 58%,#ddd0bc);
+  }
+  .product .p-media img{
+    position:relative;z-index:0;
+    filter:saturate(.96) contrast(1.015) brightness(1.01)!important;
+    transition:transform .75s cubic-bezier(.16,1,.3,1),filter .55s ease!important;
+  }
+  .product .p-media::after{
+    z-index:1;
+    background:
+      linear-gradient(180deg,rgba(244,239,229,.025) 42%,rgba(25,17,12,.38) 100%),
+      linear-gradient(135deg,rgba(143,106,46,.12),transparent 38%,rgba(200,30,44,.09));
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.11),inset 0 -60px 90px -75px rgba(49,25,14,.7);
+    transition:background .45s ease,box-shadow .45s ease;
+  }
+  .product:hover .p-media img{transform:scale(1.035);filter:saturate(1.02) contrast(1.025) brightness(1.025)!important;}
+  .product:hover .p-media::after{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),inset 0 -70px 95px -75px rgba(49,25,14,.78);}
+
+  [data-theme="dark"] .product .p-media{
+    background:linear-gradient(145deg,#17110d,#251813 58%,#0e0c0a);
+  }
+  [data-theme="dark"] .product .p-media img{
+    filter:saturate(.9) contrast(1.065) brightness(.88)!important;
+  }
+  [data-theme="dark"] .product .p-media::after{
+    background:
+      radial-gradient(circle at 78% 14%,rgba(200,30,44,.13),transparent 43%),
+      linear-gradient(180deg,rgba(13,10,8,.05) 35%,rgba(8,7,6,.62) 100%),
+      linear-gradient(135deg,rgba(188,154,108,.08),transparent 44%);
+    box-shadow:inset 0 0 0 1px rgba(244,239,229,.07),inset 0 -85px 110px -75px rgba(0,0,0,.95);
+  }
+  [data-theme="dark"] .product:hover .p-media img{
+    filter:saturate(.96) contrast(1.075) brightness(.93)!important;
+  }
+  @media(hover:none){
+    .product:hover .p-media img{transform:none;filter:saturate(.96) contrast(1.015) brightness(1.01)!important;}
+    [data-theme="dark"] .product:hover .p-media img{filter:saturate(.9) contrast(1.065) brightness(.88)!important;}
+  }
 </style>
 </head>
 <body>
@@ -2136,28 +2178,28 @@
 
 <script>
 window.__ESCENCIA_IMAGES__ = {
-  "armani_code": "images/armani_code.webp",
-  "dolce_gabbana": "images/dolce_gabbana.webp",
-  "hawas_london": "images/hawas_london.webp",
-  "hawas_kobra": "images/hawas_kobra.webp",
-  "nitro_red": "images/nitro_red.webp",
-  "sharaf_blend": "images/sharaf_blend.webp",
-  "asad_elixir": "images/asad_elixir.webp",
-  "pride": "images/pride.webp",
-  "9am": "images/9am.webp",
+  "armani_code": "images/armani_code_editorial.webp",
+  "dolce_gabbana": "images/dolce_gabbana_editorial.webp",
+  "hawas_london": "images/hawas_london_editorial.webp",
+  "hawas_kobra": "images/hawas_kobra_editorial.webp",
+  "nitro_red": "images/nitro_red_editorial.webp",
+  "sharaf_blend": "images/sharaf_blend_editorial.webp",
+  "asad_elixir": "images/asad_elixir_editorial.webp",
+  "pride": "images/pride_editorial.webp",
+  "9am": "images/9am_editorial.webp",
   "logo": "images/logo.webp",
   "mascota": "images/mascota.webp",
-  "dior_sauvage": "images/dior_sauvage.webp",
-  "valentino_born_in_roma": "images/valentino_born_in_roma.webp",
-  "very_good_girl": "images/very_good_girl.webp",
-  "versace_eros": "images/versace_eros.webp",
-  "riiffs_freeze": "images/riiffs_freeze.webp",
-  "waha": "images/waha.webp",
-  "odyssey_aqua": "images/odyssey_aqua.webp",
-  "kos_muse": "images/kos_muse.webp",
-  "katy_perry": "images/katy_perry.webp",
-  "ariana_grande": "images/ariana_grande.webp",
-  "fantasy": "images/fantasy.webp",
+  "dior_sauvage": "images/dior_sauvage_editorial.webp",
+  "valentino_born_in_roma": "images/valentino_born_in_roma_editorial.webp",
+  "very_good_girl": "images/very_good_girl_editorial.webp",
+  "versace_eros": "images/versace_eros_editorial.webp",
+  "riiffs_freeze": "images/riiffs_freeze_editorial.webp",
+  "waha": "images/waha_editorial.webp",
+  "odyssey_aqua": "images/odyssey_aqua_editorial.webp",
+  "kos_muse": "images/kos_muse_editorial.webp",
+  "katy_perry": "images/katy_perry_editorial.webp",
+  "ariana_grande": "images/ariana_grande_editorial.webp",
+  "fantasy": "images/fantasy_editorial.webp",
   "kit_inicial": "images/kit_inicial.webp",
   "kit_energia": "images/kit_energia.webp",
   "kit_seductor": "images/kit_seductor.webp",
@@ -2375,7 +2417,7 @@ window.__ESCENCIA_IMAGES__ = {
       const el = document.createElement('div');
       el.className = 'product';
       el.innerHTML = `
-        <div class="p-media">${item.isNew ? `<span class="new-badge"><span class="nb-dot"></span>Recién agregado</span>` : ''}${item.img ? `<img src="${item.img}" alt="${item.n}" loading="lazy">` : ''}</div>
+        <div class="p-media">${item.isNew ? `<span class="new-badge"><span class="nb-dot"></span>Recién agregado</span>` : ''}${item.img ? `<img src="${item.img}" alt="${item.n}" loading="lazy" decoding="async" width="600" height="600">` : ''}</div>
         <div class="p-body">
           <div class="p-index mono">N.${String(i+1).padStart(2,'0')} — ${currentSize}</div>
           <h3>${item.n}</h3>
