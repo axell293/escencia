@@ -1360,6 +1360,7 @@
   .page-progress{position:fixed;top:0;left:0;width:100%;height:2px;z-index:1000;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--red),#df765d,var(--brass));box-shadow:0 0 12px rgba(200,30,44,.45);pointer-events:none;}
   .journey-rail{position:fixed;left:18px;top:50%;translate:0 -50%;z-index:90;display:flex;flex-direction:column;align-items:center;gap:9px;color:var(--text-dim);mix-blend-mode:multiply;pointer-events:none;transition:color .4s,opacity .4s;}
   .journey-rail span{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--red);}
+  .journey-rail span{display:none;}
   .journey-rail i{display:block;width:1px;height:52px;background:linear-gradient(var(--red),var(--line));position:relative;overflow:hidden;}
   .journey-rail i::after{content:"";position:absolute;inset:-100% 0 100%;background:var(--red);animation:journeyPulse 2.4s ease-in-out infinite;}
   .journey-rail b{font-size:7px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;writing-mode:vertical-rl;transform:rotate(180deg);max-height:110px;}
@@ -1406,11 +1407,10 @@
   .radar-core b{font-family:'Playfair Display',serif; font-size:22px; font-style:italic; font-weight:600;}
   @keyframes orbitSpin{to{transform:rotate(360deg)}}
   .radar-choices{display:flex; flex-direction:column; border-top:1px solid rgba(244,239,229,.14);}
-  .radar-choice{position:relative; display:grid; grid-template-columns:34px 1fr; gap:2px 14px; padding:17px 10px; border:0; border-bottom:1px solid rgba(244,239,229,.14); background:transparent; color:rgba(244,239,229,.5); text-align:left; cursor:pointer; transition:color .35s,padding-left .35s,background .35s;}
+  .radar-choice{position:relative; display:grid; grid-template-columns:1fr; gap:2px; padding:17px 10px; border:0; border-bottom:1px solid rgba(244,239,229,.14); background:transparent; color:rgba(244,239,229,.5); text-align:left; cursor:pointer; transition:color .35s,padding-left .35s,background .35s;}
   .radar-choice::after{content:"→"; position:absolute; right:10px; top:50%; translate:0 -50%; opacity:0; transform:translateX(-8px); transition:.35s;}
   .radar-choice:hover,.radar-choice.active{color:#f4efe5; padding-left:17px; background:rgba(255,255,255,.025);}
   .radar-choice.active::after{opacity:1; transform:none; color:#d14a56;}
-  .rc-index{grid-row:1/3; font-size:9px; color:#d14a56; padding-top:3px;}
   .radar-choice b{font-family:'Playfair Display',serif; font-size:21px; font-weight:600;}
   .radar-choice small{font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:rgba(244,239,229,.4);}
   .radar-result{min-height:330px; border:1px solid rgba(244,239,229,.14); padding:28px; background:rgba(255,255,255,.025); backdrop-filter:blur(12px); display:flex; flex-direction:column; justify-content:space-between; transition:opacity .2s,transform .35s;}
@@ -1435,15 +1435,9 @@
   }
   .section-head h2{letter-spacing:-.03em;}
   .section-head .num::before{content:""; display:inline-block; width:22px; height:1px; background:currentColor; vertical-align:middle; margin-right:9px;}
-  .product .p-index{display:flex; align-items:center; justify-content:space-between;}
-  .product .p-index::after{content:"EAU DE PARFUM"; font-family:'Inter',sans-serif; font-size:7px; letter-spacing:.12em; opacity:.55;}
   .full-bottle-teaser{position:relative; overflow:hidden;}
   .full-bottle-teaser::before{content:"FULL SIZE"; position:absolute; right:-.04em; top:-.17em; font-family:'Playfair Display',serif; font-size:clamp(70px,13vw,190px); font-weight:900; color:var(--ring-a); pointer-events:none;}
   .kit-body{position:relative;}
-  .kit-body::after{position:absolute;right:18px;top:16px;font-family:'Playfair Display',serif;font-size:34px;font-style:italic;color:color-mix(in srgb,var(--line) 60%,transparent);pointer-events:none;}
-  .kit-card:nth-child(1) .kit-body::after{content:"01";}
-  .kit-card:nth-child(2) .kit-body::after{content:"02";}
-  .kit-card:nth-child(3) .kit-body::after{content:"03";}
   #marca{position:relative;overflow:hidden;}
   #marca::before{content:"MANIFIESTO";position:absolute;right:-.04em;bottom:-.18em;font-family:'Playfair Display',serif;font-size:clamp(90px,18vw,270px);font-weight:900;color:var(--ring-a);letter-spacing:-.06em;pointer-events:none;}
   #marca .about-grid{position:relative;z-index:1;max-width:1180px;margin:auto;}
@@ -1834,9 +1828,9 @@
       <a href="#kits" class="hero-text-link">Explorar kits</a>
     </div>
     <div class="tags" aria-label="Beneficios de compra">
-      <span class="tag"><span class="tag-icon" aria-hidden="true">01</span><span>3 y 5 ml</span></span>
-      <span class="tag"><span class="tag-icon" aria-hidden="true">02</span><span>100% originales</span></span>
-      <span class="tag"><span class="tag-icon" aria-hidden="true">03</span><span>Envíos nacionales</span></span>
+      <span class="tag"><span>3 y 5 ml</span></span>
+      <span class="tag"><span>100% originales</span></span>
+      <span class="tag"><span>Envíos nacionales</span></span>
     </div>
   </div>
   <a href="#kits" class="scroll-hint" aria-label="Continuar a los kits"><span>Explorar</span></a>
@@ -1850,7 +1844,7 @@
 <section id="kits">
   <div class="section-head">
     <div>
-      <div class="num mono">✦ / kits</div>
+      <div class="num mono">Kits curados</div>
       <h2>Descubre nuestros kits</h2>
     </div>
     <p>Combos armados, listos para regalar o darte un gusto.</p>
@@ -1912,7 +1906,7 @@
 
 <section id="radar" class="scent-radar" aria-labelledby="radarTitle">
   <div class="radar-intro">
-    <div class="num mono">01 / radar olfativo</div>
+    <div class="num mono">Radar olfativo</div>
     <h2 id="radarTitle">No busques un perfume.<br><em>Busca cómo quieres sentirte.</em></h2>
     <p>Elige una intención y descubre una selección curada de Escencia.</p>
   </div>
@@ -1922,10 +1916,10 @@
       <div class="radar-core"><span>Tu</span><b>esencia</b></div>
     </div>
     <div class="radar-choices" role="group" aria-label="Elige cómo quieres sentirte">
-      <button class="radar-choice active" data-mood="fresh" onclick="selectMood('fresh',this)"><span class="rc-index mono">01</span><b>Fresco</b><small>Limpio · cítrico · ligero</small></button>
-      <button class="radar-choice" data-mood="intense" onclick="selectMood('intense',this)"><span class="rc-index mono">02</span><b>Intenso</b><small>Ámbar · especias · presencia</small></button>
-      <button class="radar-choice" data-mood="sweet" onclick="selectMood('sweet',this)"><span class="rc-index mono">03</span><b>Dulce</b><small>Vainilla · frutas · calidez</small></button>
-      <button class="radar-choice" data-mood="versatile" onclick="selectMood('versatile',this)"><span class="rc-index mono">04</span><b>Versátil</b><small>Equilibrado · diario · fácil</small></button>
+      <button class="radar-choice active" data-mood="fresh" onclick="selectMood('fresh',this)"><b>Fresco</b><small>Limpio · cítrico · ligero</small></button>
+      <button class="radar-choice" data-mood="intense" onclick="selectMood('intense',this)"><b>Intenso</b><small>Ámbar · especias · presencia</small></button>
+      <button class="radar-choice" data-mood="sweet" onclick="selectMood('sweet',this)"><b>Dulce</b><small>Vainilla · frutas · calidez</small></button>
+      <button class="radar-choice" data-mood="versatile" onclick="selectMood('versatile',this)"><b>Versátil</b><small>Equilibrado · diario · fácil</small></button>
     </div>
     <div class="radar-result" id="radarResult" aria-live="polite"></div>
   </div>
@@ -1964,7 +1958,7 @@
 <section id="catalogo">
   <div class="section-head">
     <div>
-      <div class="num mono">02 / catálogo</div>
+        <div class="num mono">Catálogo</div>
       <h2>Nuestros Decants</h2>
     </div>
     <p>Elige tu tamaño y agrega al carrito. Precios en pesos MXN.</p>
@@ -2419,7 +2413,6 @@ window.__ESCENCIA_IMAGES__ = {
       el.innerHTML = `
         <div class="p-media">${item.isNew ? `<span class="new-badge"><span class="nb-dot"></span>Recién agregado</span>` : ''}${item.img ? `<img src="${item.img}" alt="${item.n}" loading="lazy" decoding="async" width="600" height="600">` : ''}</div>
         <div class="p-body">
-          <div class="p-index mono">N.${String(i+1).padStart(2,'0')} — ${currentSize}</div>
           <h3>${item.n}</h3>
           <div class="desc">${item.d}</div>
           <div class="p-footer">
