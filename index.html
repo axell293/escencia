@@ -1677,37 +1677,51 @@
     [data-theme="dark"] .product:hover .p-media img{filter:saturate(.9) contrast(1.065) brightness(.88)!important;}
   }
 
-  /* Radar móvil — selector táctil compacto */
+  /* CTA secundario del hero — visible sin competir con catálogo */
+  .hero-single .hero-text-link{
+    min-width:176px;min-height:48px;display:inline-flex;align-items:center;justify-content:space-between;gap:18px;
+    padding:10px 11px 10px 19px;border:1px solid color-mix(in srgb,var(--brass) 58%,var(--line));border-radius:999px;
+    background:color-mix(in srgb,var(--card) 82%,transparent);color:var(--text);font-size:9px;font-weight:800;
+    letter-spacing:.1em;text-transform:uppercase;text-decoration:none;box-shadow:0 12px 30px -28px rgba(24,19,13,.75);
+    transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .3s,background .3s,box-shadow .3s;
+  }
+  .hero-single .hero-text-link::after{display:none;}
+  .hero-single .hero-text-link:hover{transform:translateY(-2px);border-color:var(--red);background:var(--card);box-shadow:0 17px 34px -25px rgba(200,30,44,.7);}
+  .kit-arrow{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red);font-size:14px;transition:transform .35s cubic-bezier(.16,1,.3,1),background .3s;}
+  .hero-text-link:hover .kit-arrow{transform:translateY(3px);background:color-mix(in srgb,var(--red) 20%,transparent);}
+  .radar-title-mobile{display:none;}
+
+  /* Radar móvil — panel compacto, sin desplazamiento horizontal */
   @media(max-width:650px){
-    .scent-radar{min-height:100svh;padding:54px 0 72px;}
-    .radar-intro{padding:0 6vw;margin-bottom:24px;}
-    .radar-intro .num{font-size:8px;letter-spacing:.14em;}
-    .radar-intro h2{font-size:clamp(34px,10vw,42px);line-height:.98;margin-top:12px;}
-    .radar-intro p{max-width:320px;margin-top:16px;font-size:11.5px;line-height:1.55;}
+    .hero-single .hero-cta{gap:10px;}
+    .hero-single .hero-text-link{width:205px!important;min-width:205px;min-height:46px;padding:9px 10px 9px 17px;font-size:8px!important;}
+    .scent-radar{min-height:100svh;padding:38px 0 48px;display:flex;flex-direction:column;justify-content:center;}
+    .radar-intro{padding:0 5vw;margin-bottom:18px;}
+    .radar-intro .num{font-size:7px;letter-spacing:.14em;}
+    .radar-intro h2{font-size:clamp(30px,8.5vw,35px);line-height:.94;margin-top:9px;}
+    .radar-title-desktop{display:none;}.radar-title-mobile{display:inline;}
+    .radar-intro p{max-width:none;margin-top:12px;font-size:10.5px;line-height:1.4;}
     .radar-shell{display:block;}
     .radar-choices{
-      display:flex;grid-template-columns:none;gap:8px;overflow-x:auto;
-      margin:0;padding:0 6vw 12px;border:0;scroll-snap-type:x mandatory;
-      scroll-padding-inline:6vw;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;overflow:visible;
+      margin:0;padding:0 5vw;border:0;
     }
-    .radar-choices::-webkit-scrollbar{display:none;}
     .radar-choice{
-      flex:0 0 142px;min-height:78px;padding:13px 14px;border:1px solid rgba(244,239,229,.14);
-      scroll-snap-align:start;background:rgba(255,255,255,.018);align-content:center;
+      min-width:0;min-height:48px;padding:9px 5px;border:1px solid rgba(244,239,229,.14);
+      background:rgba(255,255,255,.018);align-content:center;text-align:center;
     }
-    .radar-choice:hover,.radar-choice.active{padding-left:14px;}
+    .radar-choice:hover,.radar-choice.active{padding-left:5px;}
     .radar-choice.active{border-color:rgba(209,74,86,.78);background:linear-gradient(145deg,rgba(200,30,44,.12),rgba(255,255,255,.025));box-shadow:0 14px 30px -24px rgba(200,30,44,.9);}
-    .radar-choice b{font-size:18px;line-height:1.05;}
-    .radar-choice small{margin-top:5px;font-size:7.5px;line-height:1.3;letter-spacing:.06em;}
-    .radar-choice::after{right:10px;top:13px;font-size:12px;}
-    .radar-result{min-height:0;margin:8px 6vw 0;padding:22px 20px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));box-shadow:0 22px 55px -42px #000;}
+    .radar-choice b{font-family:'Inter',sans-serif;font-size:10px;line-height:1;letter-spacing:.02em;}
+    .radar-choice small,.radar-choice::after{display:none;}
+    .radar-result{min-height:0;margin:12px 5vw 0;padding:18px 17px;border-left:2px solid var(--red);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));box-shadow:0 22px 55px -42px #000;}
     .rr-label{font-size:7px;}
-    .rr-title{font-size:clamp(25px,7.5vw,30px);margin-top:10px;}
-    .rr-copy{font-size:11px;line-height:1.55;margin-top:10px;}
-    .rr-products{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:16px 0;}
-    .rr-product{display:flex;align-items:center;min-height:34px;padding:7px 8px;font-size:7.5px;line-height:1.25;}
-    .rr-action{padding-top:14px;font-size:8.5px;}
-    .scent-radar::before{bottom:-.08em;font-size:46vw;}
+    .rr-title{font-size:clamp(22px,6.5vw,27px);margin-top:8px;}
+    .rr-copy{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:10px;line-height:1.45;margin-top:8px;}
+    .rr-products{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:13px 0;}
+    .rr-product{display:flex;align-items:center;min-height:29px;padding:6px 7px;font-size:7px;line-height:1.2;}
+    .rr-action{padding-top:12px;font-size:8px;}
+    .scent-radar::before{display:none;}
   }
 </style>
 </head>
@@ -1858,7 +1872,7 @@
     <p class="sub">Decants originales de diseñador, árabes y nicho, elegidos para encontrar la fragancia que habla por ti.</p>
     <div class="hero-cta">
       <a href="#catalogo" class="btn-primary"><span>Ver catálogo</span><span class="cta-arrow" aria-hidden="true">→</span></a>
-      <a href="#kits" class="hero-text-link">Explorar kits</a>
+      <a href="#kits" class="hero-text-link"><span>Explorar kits</span><span class="kit-arrow" aria-hidden="true">↓</span></a>
     </div>
     <div class="tags" aria-label="Beneficios de compra">
       <span class="tag"><span>3 y 5 ml</span></span>
@@ -1940,8 +1954,8 @@
 <section id="radar" class="scent-radar" aria-labelledby="radarTitle">
   <div class="radar-intro">
     <div class="num mono">Radar olfativo</div>
-    <h2 id="radarTitle">No busques un perfume.<br><em>Busca cómo quieres sentirte.</em></h2>
-    <p>Elige una intención y descubre una selección curada de Escencia.</p>
+    <h2 id="radarTitle"><span class="radar-title-desktop">No busques un perfume.<br><em>Busca cómo quieres sentirte.</em></span><span class="radar-title-mobile">¿Cómo quieres<br><em>sentirte hoy?</em></span></h2>
+    <p>Toca una intención y descubre tu selección Escencia.</p>
   </div>
   <div class="radar-shell">
     <div class="radar-orbit" aria-hidden="true">
@@ -2307,7 +2321,6 @@ window.__ESCENCIA_IMAGES__ = {
       el.classList.toggle('active',selected);
       el.setAttribute('aria-pressed',String(selected));
     });
-    if(window.innerWidth<=650) button.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
     const result=document.getElementById('radarResult');
     result.classList.add('is-changing');
     setTimeout(()=>{renderRadarMood(mood);result.classList.remove('is-changing');},180);
