@@ -2401,7 +2401,7 @@
             <button class="pe-share-btn copy" type="button" onclick="copyProductLink()">Copiar enlace</button>
           </div>
         </div>
-        <p class="pe-share-status" id="peShareStatus">Creando una tarjeta 1080 &times; 1920 con identidad Escencia.</p>
+        <p class="pe-share-status" id="peShareStatus">Preparando imagen y enlace directo al perfume.</p>
       </div>
     </div>
   </article>
@@ -2981,10 +2981,10 @@ window.__ESCENCIA_IMAGES__ = {
     const packaging=document.querySelector('.pe-packaging');packaging.classList.remove('premium-selected','is-switching');document.getElementById('pePackagingImage').src='images/atomizador_clasico.webp';document.getElementById('pePackagingImage').alt='Atomizador clásico transparente';document.getElementById('pePackagingCopy').textContent='Ligero, limpio y práctico para llevar tu perfume todos los días.';
     document.querySelectorAll('.pe-color-option').forEach(button=>{const selected=button.dataset.color==='plateado';button.classList.toggle('active',selected);button.setAttribute('aria-pressed',String(selected));});
     const add=document.getElementById('peAdd');add.textContent='Agregar este perfume';add.classList.remove('added');add.onclick=()=>addSelectedProductToCart(add);
-    const share=document.getElementById('peNativeShare');share.disabled=false;share.setAttribute('aria-expanded','false');share.closest('.pe-share').classList.remove('open');document.getElementById('peShareStatus').textContent='Preparando la historia para compartir.';
+    const share=document.getElementById('peNativeShare');share.disabled=false;share.setAttribute('aria-expanded','false');share.closest('.pe-share').classList.remove('open');document.getElementById('peShareStatus').textContent='Preparando imagen y enlace directo al perfume.';
     modal.classList.add('show');modal.setAttribute('aria-hidden','false');syncPageLock();setTimeout(()=>modal.querySelector('.pe-close').focus(),80);
     if(/^https?:$/.test(location.protocol)){const live=new URL(location.href);live.searchParams.set('producto',productSlug(product.n));live.searchParams.set('size',size);live.hash='catalogo';history.replaceState(null,'',live);}
-    createProductStory(product,size).then(file=>{if(buildId!==storyBuildId)return;activeStoryFile=file;document.getElementById('peShareStatus').textContent='Historia lista para compartir.';}).catch(()=>{if(buildId!==storyBuildId)return;document.getElementById('peShareStatus').textContent='Puedes compartir el enlace del producto.';});
+    createProductStory(product,size).then(file=>{if(buildId!==storyBuildId)return;activeStoryFile=file;document.getElementById('peShareStatus').textContent='Imagen lista. El enlace abrirá este perfume y su presentación.';}).catch(()=>{if(buildId!==storyBuildId)return;document.getElementById('peShareStatus').textContent='El enlace directo está listo para compartir.';});
   }
   function selectProductPackaging(premium){
     if(!activeProductDetail)return;activeProductDetail.premium=!!premium;const{product,size}=activeProductDetail,price=product.p+(premium?PREMIUM_ATOMIZER_UPCHARGE:0);
@@ -2992,8 +2992,8 @@ window.__ESCENCIA_IMAGES__ = {
     const packaging=document.querySelector('.pe-packaging'),packagingImage=document.getElementById('pePackagingImage'),packagingCopy=document.getElementById('pePackagingCopy'),color=PREMIUM_ATOMIZER_COLORS[activeProductDetail.premiumColor]||PREMIUM_ATOMIZER_COLORS.plateado;packaging.classList.toggle('premium-selected',premium);packaging.classList.add('is-switching');setTimeout(()=>{packagingImage.src=premium?color.img:'images/atomizador_clasico.webp';packagingImage.alt=premium?`Atomizador premium ${color.label.toLowerCase()}`:'Atomizador clásico transparente';packagingCopy.textContent=premium?`Acabado ${color.label.toLowerCase()} y cuerpo reforzado: más resistente, elegante y creado para acompañarte por más tiempo.`:'Ligero, limpio y práctico para llevar tu perfume todos los días.';packaging.classList.remove('is-switching');},120);
     if(/^https?:$/.test(location.protocol)){const live=new URL(location.href);if(premium){live.searchParams.set('envase','premium');live.searchParams.set('color',activeProductDetail.premiumColor||'plateado');}else{live.searchParams.delete('envase');live.searchParams.delete('color');}history.replaceState(null,'',live);}
     const add=document.getElementById('peAdd');add.textContent='Agregar este perfume';add.classList.remove('added');
-    activeStoryFile=null;const buildId=++storyBuildId;document.getElementById('peShareStatus').textContent='Actualizando la historia para compartir.';
-    createProductStory({...product,p:price},size).then(file=>{if(buildId!==storyBuildId)return;activeStoryFile=file;document.getElementById('peShareStatus').textContent='Historia lista para compartir.';}).catch(()=>{if(buildId!==storyBuildId)return;document.getElementById('peShareStatus').textContent='Puedes compartir el enlace del producto.';});
+    activeStoryFile=null;const buildId=++storyBuildId;document.getElementById('peShareStatus').textContent='Actualizando imagen y enlace del perfume.';
+    createProductStory({...product,p:price},size).then(file=>{if(buildId!==storyBuildId)return;activeStoryFile=file;document.getElementById('peShareStatus').textContent='Imagen lista. El enlace abrirá este perfume y su presentación.';}).catch(()=>{if(buildId!==storyBuildId)return;document.getElementById('peShareStatus').textContent='El enlace directo está listo para compartir.';});
   }
   function selectPremiumColor(colorKey){
     if(!activeProductDetail||!PREMIUM_ATOMIZER_COLORS[colorKey])return;activeProductDetail.premiumColor=colorKey;const color=PREMIUM_ATOMIZER_COLORS[colorKey];
@@ -3031,13 +3031,28 @@ window.__ESCENCIA_IMAGES__ = {
   }
   function downloadStory(){if(!activeStoryFile)return false;const link=document.createElement('a'),objectUrl=URL.createObjectURL(activeStoryFile);link.href=objectUrl;link.download=activeStoryFile.name;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(objectUrl),1000);return true;}
   async function shareProductNative(){
-    if(!activeProductDetail)return;const{product,size}=activeProductDetail,url=productShareUrl(product,size),text=`${product.n} · ${size}\n${product.d}\n${url}`;
-    try{if(activeStoryFile&&navigator.canShare&&navigator.canShare({files:[activeStoryFile]}))await navigator.share({files:[activeStoryFile],title:`${product.n} | Escencia`,text});else if(navigator.share)await navigator.share({title:`${product.n} | Escencia`,text,url});else{downloadStory();await copyText(url);showToast('Historia descargada y enlace copiado');}}catch(error){if(error.name!=='AbortError')showToast('No se pudo abrir el menú para compartir');}
+    if(!activeProductDetail)return;const{product,size}=activeProductDetail,url=productShareUrl(product,size),text=`${product.n} · ${size}\n${product.d}`;
+    try{if(navigator.share)await navigator.share({title:`${product.n} | Escencia`,text,url});else{await copyText(url);showToast('Enlace directo copiado');}}catch(error){if(error.name!=='AbortError')showToast('No se pudo abrir el menú para compartir');}
   }
   async function shareProductChannel(channel){
     if(!activeProductDetail)return;const{product,size}=activeProductDetail,url=productShareUrl(product,size),text=`Mira ${product.n} en Escencia Perfumería · ${size}\n${url}`;
-    if(activeStoryFile&&navigator.canShare&&navigator.canShare({files:[activeStoryFile]})){try{await navigator.share({files:[activeStoryFile],title:product.n,text});return;}catch(error){if(error.name==='AbortError')return;}}
-    if(channel==='whatsapp')window.open(`https://wa.me/?text=${encodeURIComponent(text)}`,'_blank','noopener');else if(channel==='facebook')window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,'_blank','noopener');else if(downloadStory())showToast('Historia descargada: súbela a Instagram');else showToast('Espera a que termine de prepararse');
+    if(channel==='whatsapp'){
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`,'_blank','noopener');
+      showToast('Enlace directo listo en WhatsApp');
+      return;
+    }
+    if(channel==='facebook'){
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,'_blank','noopener');
+      showToast('La publicación abrirá este perfume');
+      return;
+    }
+    if(channel==='instagram'){
+      try{await copyText(url);}catch(error){}
+      if(activeStoryFile&&navigator.canShare&&navigator.canShare({files:[activeStoryFile]})){
+        try{await navigator.share({files:[activeStoryFile],title:`${product.n} | Escencia`,text:`${product.n} · ${size}`});showToast('Enlace copiado: agrégalo con el sticker Enlace');return;}catch(error){if(error.name==='AbortError')return;}
+      }
+      if(downloadStory())showToast('Imagen descargada y enlace copiado para Instagram');else showToast('Enlace copiado; espera a que termine la imagen');
+    }
   }
   async function copyText(text){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(text);const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();document.execCommand('copy');area.remove();}
   async function copyProductLink(){if(!activeProductDetail)return;await copyText(productShareUrl(activeProductDetail.product,activeProductDetail.size));showToast('Enlace del producto copiado');}
