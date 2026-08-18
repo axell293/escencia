@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1547146013349918');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1547146013349918&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
 <title>Escencia Perfumería — 100% Originales</title>
@@ -2574,6 +2591,16 @@ window.__ESCENCIA_IMAGES__ = {
 
     try{
       const items = keys.map(key => cart[key]);
+
+      if(typeof fbq === 'function'){
+        fbq('track', 'InitiateCheckout', {
+          value: cartTotal(),
+          currency: 'MXN',
+          num_items: cartCount()
+        });
+      }
+      localStorage.setItem('escencia_last_total', String(cartTotal()));
+
       const res = await fetch('/.netlify/functions/create-preference', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -2727,6 +2754,15 @@ window.__ESCENCIA_IMAGES__ = {
     }
     updateCartUI();
     showToast(`${name} (${size}) agregado`);
+
+    if(typeof fbq === 'function'){
+      fbq('track', 'AddToCart', {
+        content_name: name,
+        content_type: 'product',
+        value: price,
+        currency: 'MXN'
+      });
+    }
   }
 
   function changeQty(key, delta){
@@ -3144,6 +3180,16 @@ window.__ESCENCIA_IMAGES__ = {
       const msg = `Hola, ya realicé mi pago con tarjeta ✅\n\nMi pedido:\n${orderRaw}\n\nPor favor confírmenme la entrega.`;
       waLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
       waLink.style.display = 'flex';
+
+      if(typeof fbq === 'function'){
+        const lastTotal = parseFloat(localStorage.getItem('escencia_last_total')) || 0;
+        fbq('track', 'Purchase', {
+          value: lastTotal,
+          currency: 'MXN'
+        });
+      }
+      localStorage.removeItem('escencia_last_total');
+
       // El pago ya se completó, vaciamos el carrito para no confundir con un pedido pendiente
       cart = {};
       updateCartUI();
