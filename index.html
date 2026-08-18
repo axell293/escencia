@@ -2061,7 +2061,7 @@
           <p class="kit-note">1 decant de 5ml de cada fragancia</p>
           <div class="kit-footer">
             <span class="kit-price mono">$215</span>
-            <a class="kit-cta" href="https://wa.me/526122006542?text=Hola%2C%20me%20interesa%20el%20Kit%20Inicial%20(Nitro%20Red%2C%20Sharaf%20Blend%2C%20Art%20of%20Universe)%20-%20%24215" target="_blank" rel="noopener">Pedir</a>
+            <a class="kit-cta" href="#" onclick="addToCart('Kit Inicial (Nitro Red, Sharaf Blend, Art of Universe)', 215, 'Kit', this); return false;">Agregar al carrito</a>
           </div>
         </div>
       </div>
@@ -2073,8 +2073,8 @@
           <p class="kit-includes">Kos Muse · Ariana Grande Sweet Like Candy · Fantasy Britney Spears</p>
           <p class="kit-note">1 decant de 5ml de cada fragancia</p>
           <div class="kit-footer">
-            <span class="kit-price mono">$240</span>
-            <a class="kit-cta" href="https://wa.me/526122006542?text=Hola%2C%20me%20interesa%20el%20Kit%20Energ%C3%ADa%20Femenina%20(Kos%20Muse%2C%20Ariana%20Grande%2C%20Fantasy%20Britney%20Spears)%20-%20%24240" target="_blank" rel="noopener">Pedir</a>
+            <span class="kit-price mono">$239</span>
+            <a class="kit-cta" href="#" onclick="addToCart('Kit Energía Femenina (Kos Muse, Ariana Grande, Fantasy Britney Spears)', 239, 'Kit', this); return false;">Agregar al carrito</a>
           </div>
         </div>
       </div>
@@ -2087,8 +2087,8 @@
           <p class="kit-includes">Asad Elixir · Versace Eros · Dolce &amp; Gabbana The One</p>
           <p class="kit-note">1 decant de 5ml de cada fragancia</p>
           <div class="kit-footer">
-            <span class="kit-price mono">$275</span>
-            <a class="kit-cta" href="https://wa.me/526122006542?text=Hola%2C%20me%20interesa%20el%20Kit%20Seductor%20(Asad%20Elixir%2C%20Versace%20Eros%2C%20Dolce%20%26%20Gabbana%20The%20One)%20-%20%24275" target="_blank" rel="noopener">Pedir</a>
+            <span class="kit-price mono">$269</span>
+            <a class="kit-cta" href="#" onclick="addToCart('Kit Seductor (Asad Elixir, Versace Eros, Dolce & Gabbana The One)', 269, 'Kit', this); return false;">Agregar al carrito</a>
           </div>
         </div>
       </div>
@@ -2747,7 +2747,7 @@ window.__ESCENCIA_IMAGES__ = {
     }
     if(btn){
       btn.classList.add('added');
-      btn.textContent = btn.classList.contains('pe-add') ? 'Agregado al carrito ✓' : '✓';
+      btn.textContent = (btn.classList.contains('pe-add') || btn.classList.contains('kit-cta')) ? 'Agregado al carrito ✓' : '✓';
       btn.classList.remove('pop');
       void btn.offsetWidth; // reinicia la animación si se agrega rápido varias veces
       btn.classList.add('pop');
