@@ -2932,6 +2932,7 @@ window.__ESCENCIA_IMAGES__ = {
     return cartSubtotal() - cartDiscount();
   }
   const COUPONS = {AMODECANTS2026:{rate:.10,label:'10%'},AROMA5:{rate:.05,label:'5%'},ESCENCIA10:{rate:.10,label:'10%'},MINI15:{rate:.15,label:'15%'}};
+  const STAMP_COUPON_STAMPS = {AROMA5:2,ESCENCIA10:4,MINI15:6};
   let couponApplied = false;
   let activeCouponCode = '';
   let couponRate = 0;
@@ -2940,7 +2941,7 @@ window.__ESCENCIA_IMAGES__ = {
     const message = document.getElementById('couponMessage');
     const value = input.value.trim().toUpperCase();
     message.className = 'coupon-message';
-    if(COUPONS[value]){
+    if(COUPONS[value] && (!STAMP_COUPON_STAMPS[value] || getStamps() >= STAMP_COUPON_STAMPS[value])){
       couponApplied = true;
       activeCouponCode = value;
       couponRate = COUPONS[value].rate;
@@ -2954,6 +2955,7 @@ window.__ESCENCIA_IMAGES__ = {
       couponRate = 0;
       message.textContent = value ? 'El código no es válido.' : '';
       if(value) message.classList.add('error');
+      if(value && STAMP_COUPON_STAMPS[value]) message.textContent = `Desbloquea la casilla ${STAMP_COUPON_STAMPS[value]} para usar este cupón.`;
     }
     updateCartUI();
   }
@@ -3104,6 +3106,7 @@ window.__ESCENCIA_IMAGES__ = {
     if(progress) progress.style.width = `${(stamps / STAMP_GOAL) * 100}%`;
 
     const stampRewards = {1:{label:'AROMA5',detail:'5%'},3:{label:'ESCENCIA10',detail:'10%'},5:{label:'MINI15',detail:'15%'},9:{label:'DECANT3',detail:'3 ml'}};
+    Object.keys(stampRewards).forEach(key => { if(Number(key) >= stamps) delete stampRewards[key]; });
     grid.innerHTML = '';
     for(let i = 0; i < STAMP_GOAL; i++){
       const dot = document.createElement('div');
@@ -3112,6 +3115,7 @@ window.__ESCENCIA_IMAGES__ = {
       grid.appendChild(dot);
       if(i >= stamps) dot.textContent = String(i + 1);
       const reward = stampRewards[i];
+      const rewardLocked = reward && i >= stamps;
       dot.innerHTML = `<span>${i < stamps ? '✓' : i + 1}</span>${reward ? `<small>${reward.label}</small>` : '<small>—</small>'}`;
     }
 
